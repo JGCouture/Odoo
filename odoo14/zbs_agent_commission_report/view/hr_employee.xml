@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="inherit_employee_form_agent_commission">
+            <field name="name">hr.employee.Inherit.form.View</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <field name="work_location" position="before">
+                    <field name="commission_per"/>
+                    <field name="is_a_agent"/>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</odoo>

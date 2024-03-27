@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="send_login_credential_by_email" model="mail.template">
+            <field name="name">Send login credential email template</field>
+            <field name="model_id" ref="base.model_res_partner"/>
+            <field name="subject">Your ZBS POS account login credentials.</field>
+            <field name="email_from">${(object.user_id.email_formatted or user.email_formatted) | safe}</field>
+            <field name="email_to">${object.email}</field>
+            <field name="body_html" type="html">
+<div style="margin: 0px; padding: 0px;">
+    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+        Hello ${object.name},
+        <br/><br/>
+        Please find the below login credentials for your ZBS POS account.
+        % set data=object.get_login_credentials()
+        % set access_url= data.get('url')
+        % set username = data.get('login')
+        % set password = data.get('password')
+        <p>Login Url : <a  href="${access_url}">${access_url}</a> </p>
+        <p>Username :  ${username} </p>
+        <p>Password :  ${password} </p>
+        <br/><br/>
+        Do not hesitate to contact us if you have any questions.
+        <br/>
+    </p>
+</div>
+            </field>
+            <field name="lang">${object.lang}</field>
+            <field name="auto_delete" eval="True"/>
+        </record>
+
+    </data>
+</odoo>
