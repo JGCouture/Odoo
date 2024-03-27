@@ -1,0 +1,197 @@
+<odoo>
+  <data>
+
+    <template inherit_id="sale.report_saleorder_document" id="inherit_sale_order_add_recurring_total">
+         <xpath expr="//div[@id='total']//div" position="replace">
+            <div t-attf-class="#{'col-12' if report_type != 'html' else 'col-sm-7 col-md-5'} ml-auto">
+                <div class="row">
+                  <div class="col-8">
+                    <t t-if="doc.company_id.id == 6">
+                      <br/><br/>
+                        <t t-if="doc.x_studio_demo_start_date">
+                            <span>Demo Start Date : <span t-field="doc.x_studio_demo_start_date"></span></span><br/>
+                        </t>
+                        <t t-if="doc.x_studio_demo_end_date">
+                            <span>Demo End Date : <span t-field="doc.x_studio_demo_end_date"></span></span><br/>
+                        </t>
+                        <t t-if="doc.x_studio_system_must_be_return_by_date">
+                            <span>System must be return by date: : <span t-field="doc.x_studio_system_must_be_return_by_date"></span></span>
+                        </t>
+                    </t>
+                  </div>
+                  <div class="col-4">
+                    <table class="table table-sm">
+                        <tr class="border-black o_subtotal" style="">
+                            <td name="td_amount_untaxed_label"><strong>Subtotal</strong></td>
+                            <td name="td_amount_untaxed" class="text-right">
+                                <span t-field="doc.amount_untaxed"/>
+                            </td>
+                        </tr>
+                        <t t-foreach="doc.amount_by_group" t-as="amount_by_group">
+                            <tr style="">
+                                <t t-if="amount_by_group[5] == 1 and doc.amount_untaxed == amount_by_group[2]">
+                                    <td name="td_amount_by_group_label_3">
+                                        <span t-esc="amount_by_group[0]"/>
+                                        <span>&amp;nbsp;<span>on</span>&amp;nbsp;<t t-esc="amount_by_group[2]" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: doc.pricelist_id.currency_id}"/></span>
+                                    </td>
+                                    <td name="td_amount_by_group_3" class="text-right o_price_total">
+                                        <span t-esc="amount_by_group[1]" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: doc.pricelist_id.currency_id}"/>
+                                    </td>
+                                </t>
+                                <t t-else="">
+                                    <td name="td_amount_by_group_label">
+                                        <span t-esc="amount_by_group[0]"/>
+                                    </td>
+                                    <td name="td_amount_by_group" class="text-right o_price_total">
+                                        <span t-esc="amount_by_group[1]" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: doc.pricelist_id.currency_id}"/>
+                                    </td>
+                                </t>
+                            </tr>
+                        </t>
+                        <tr class="border-black o_total">
+                            <td name="td_amount_total_label"><strong>Total</strong></td>
+                            <td name="td_amount_total" class="text-right">
+                                <span t-field="doc.amount_total"/>
+                            </td>
+                        </tr>
+                    </table>
+                  </div>
+                </div>
+            </div>
+        </xpath>
+
+        <xpath expr="//div[@name='so_total_summary']//tr[hasclass('o_subtotal')]" position="replace">
+            <tr class="border-black o_subtotal" style="">
+                <td name="td_amount_untaxed_label"><strong>Subtotal</strong></td>
+                <td name="td_amount_untaxed" class="text-right">
+                    <span t-esc="doc.amount_untaxed - doc.get_recurring_total()" class="monetary_field" style="white-space: nowrap;" t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}"/>
+                </td>
+            </tr>
+        </xpath>
+        <xpath expr="//div[@name='so_total_summary']//tr[hasclass('o_subtotal')]" position="after">
+            <tr class="" style="">
+                <td name="td_amount_untaxed_label"><strong><Recu>Recurring Total</Recu></strong></td>
+                <td name="td_amount_untaxed" class="text-right">
+                    <span t-esc="doc.get_recurring_total()" class="monetary_field" style="white-space: nowrap;" t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}"/>
+                </td>
+            </tr>
+        </xpath>
+        <xpath expr="//t[@t-set='address']" position="replace">
+
+        </xpath>
+
+        <xpath expr="//t//t[3]" position="replace">
+
+        </xpath>
+
+        <xpath expr="//div[hasclass('page')]" position="before">
+          <br/>
+          <div class="row">
+            <div class="col-4">
+              <strong>Shipping Address:</strong>
+                <div t-field="doc.partner_shipping_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;, &quot;phone&quot;,&quot;mobile&quot;,&quot;email&quot;], &quot;no_marker&quot;: False, &quot;phone_icons&quot;: True}"/>
+            </div>
+            <div class="col-4">
+              <strong>Billing Address:</strong>
+                <div t-field="doc.partner_invoice_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;, &quot;phone&quot;,&quot;mobile&quot;,&quot;email&quot;], &quot;no_marker&quot;: False, &quot;phone_icons&quot;: True}"/>
+            </div>
+            <div class="col-4">
+              <h2 class="mt16">
+                <t t-if="not (env.context.get('proforma', False) or is_pro_forma)">
+                    <span t-if="doc.state not in ['draft','sent']">Order # </span>
+                    <span t-if="doc.state in ['draft','sent']">Quotation # </span>
+                </t>
+                <t t-if="env.context.get('proforma', False) or is_pro_forma">
+                    <span>Pro-Forma Invoice # </span>
+                </t>
+                <span t-field="doc.name"/>
+              </h2>
+            </div>
+            </div>
+            <br/><br/>
+        </xpath>
+
+        <xpath expr="//div[hasclass('page')]//h2[1]" position="replace"/>
+
+        <xpath expr="//div[@id='informations']//div[2]" position="replace">
+          <div t-if="doc.date_order and doc.state not in ['draft','sent']" class="col-auto col-3 mw-100 mb-2">
+              <strong>Order Date:</strong>
+              <p class="m-0" t-field="doc.date_order" t-options="{&quot;widget&quot;: &quot;date&quot;}"/>
+          </div>
+        </xpath>
+
+
+
+<!--        <xpath expr="//p[@t-if='doc.payment_term_id.note']" position="before">-->
+<!--          <t t-if="doc.company_id.id == 6">-->
+<!--            <div class="row">-->
+<!--              <div class="col-3">-->
+<!--                <b>Demo Start Date:</b><br/>-->
+<!--                <span t-field="doc.x_studio_demo_start_date"/>-->
+<!--              </div>-->
+<!--              <div class="col-3">-->
+<!--                <b>Demo End Date:</b><br/>-->
+<!--                <span t-field="doc.x_studio_demo_end_date"/>-->
+<!--              </div>-->
+<!--              <div class="col-6">-->
+<!--                <b>System must be return by date:</b><br/>-->
+<!--                <span t-field="doc.x_studio_system_must_be_return_by_date"/>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </t>-->
+<!--        </xpath>-->
+         <xpath expr="//div[@t-if='doc.user_id.name']" position="replace">
+             <t t-if="doc.company_id.id != 6">
+                 <div t-if="doc.user_id.name" class="col-auto col-3 mw-100 mb-2">
+                    <strong>Salesperson:</strong>
+                    <p class="m-0" t-field="doc.user_id"/>
+                </div>
+             </t>
+         </xpath>
+         <xpath expr="//div[@t-if='doc.user_id.name']" position="before">
+            <t t-if="doc.company_id.id in [1,2]">
+                <div class="col-auto col-3 mw-100 mb-2">
+                    <strong>Ticket #:</strong>
+                    <p class="m-0" t-field="doc.x_studio_ticket__1"/>
+                </div>
+            </t>
+              <div t-if="doc.x_studio_many2one_field_8mpil and doc.company_id.id != 6" class="col-auto col-3 mw-100 mb-2">
+                  <strong>Agent:</strong>
+                  <p class="m-0" t-field="doc.x_studio_many2one_field_8mpil"/>
+              </div>
+                <div t-if="doc.x_studio_deployment_method_1" class="col-auto col-3 mw-100 mb-2">
+                    <strong>Deployment Method:</strong>
+                    <p class="m-0" t-field="doc.x_studio_deployment_method_1"/>
+                </div>
+        </xpath>
+    </template>
+
+    <template id="inherit_saleorder_portal_templ_recurring_total" inherit_id="sale.sale_order_portal_content_totals_table">
+        <xpath expr="//table//tr[1]" position="replace">
+            <tr class="border-black">
+                <td><strong>Subtotal</strong></td>
+                <td class="text-right">
+                <span t-esc="sale_order.amount_untaxed - sale_order.get_recurring_total()" data-id="total_untaxed" class="monetary_field"  t-options='{"widget": "monetary","display_currency": sale_order.pricelist_id.currency_id}'/>
+
+<!--                    <span-->
+<!--                        data-id="total_untaxed"-->
+<!--                        t-field="sale_order.amount_untaxed"-->
+<!--                        t-options='{"widget": "monetary","display_currency": sale_order.pricelist_id.currency_id}'-->
+<!--                    />-->
+                </td>
+            </tr>
+        </xpath>
+        <xpath expr="//table//tr[1]" position="after">
+            <tr class="border-black">
+                <td><strong>Recurring Total</strong></td>
+                <td class="text-right">
+                <span t-esc="sale_order.get_recurring_total()" class="monetary_field"  t-options='{"widget": "monetary","display_currency": sale_order.pricelist_id.currency_id}'/>
+                </td>
+            </tr>
+        </xpath>
+
+    </template>
+
+
+  </data>
+</odoo>
