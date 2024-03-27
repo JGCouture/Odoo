@@ -1,0 +1,132 @@
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <h2 class="oe_slogan">Force apply 'AND' condition for search view.</h2>
+        <div class="w3-content w3-display-container">
+            <pre class="bg-black">
+                <code>
+    e.g.
+
+    &lt;search string="Documents"&gt;
+        ...
+        &lt;field name="name" string="Document (AND)" options="{'filter_domain_condition': 'and'}"/&gt;
+        &lt;field name="name" string="Document (OR)"/&gt;
+        ...
+    &lt;/search&gt;
+                </code>
+            </pre>
+            <div class="alert alert-info">
+                <i class="fa fa-lightbulb-o"></i> Developer can use 'AND', 'and' and '&amp;' as value of filter_domain_condition.
+            </div>
+        </div>
+    </div>
+    <div class="oe_row oe_spaced">
+        <h2 class="oe_slogan">On drag open record on kanban view</h2>
+        <h4 class="oe_slogan">Options</h4>
+        <div class="table-responsive">
+            <table class="table table-bordered table-sm bg-black">
+                <thead>
+                    <tr>
+                        <td>Option</td>
+                        <td>Value</td>
+                        <td>Description</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>form_dialog_size</td>
+                        <td>'small', 'medium' or 'large'</td>
+                        <td>Specify the popup size. Default value is 'medium'.</td>
+                    </tr>
+                    <tr>
+                        <td>drag_forward_domain</td>
+                        <td>e.g. [('art_state', '=', False), ...N]</td>
+                        <td>
+                            Popup will open based on specified domain else it will work as it is.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>drag_backward_domain</td>
+                        <td>e.g. [('art_state', '=', False), ...N]</td>
+                        <td>
+                            Popup will open based on specified domain else it will work as it is.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>forward_form_view_ref</td>
+                        <td></td>
+                        <td>
+                            Needs to specify the value of 'forward_form_view_ref' if user want to open
+                            specific form view when move forward kanban record. otherwise it will take default form view
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>backward_form_view_ref</td>
+                        <td></td>
+                        <td>
+                            Needs to specify the value of 'forward_form_view_ref' if user want to open
+                            specific form view when move forward kanban record. otherwise it will take default form view
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="w3-content w3-display-container">
+            <pre class="bg-black">
+                <code>
+    e.g.
+
+    &lt;record id="view_art_production_kanban" model="ir.ui.view"&gt;
+        ...
+        &lt;field name="arch" type="xml"&gt;
+            &lt;kanban on_drag_open_record="{
+                    'form_dialog_size': 'small',
+                    'drag_forward_domain': [('art_state', '=', False)],
+                    'drag_backward_domain': [],
+                    'forward_form_view_ref': 'bista_art_work.art_production_quick_form_view',
+                    'backward_form_view_ref': 'bista_art_work.art_production_quick_form_view',
+                }"&gt;
+                ...
+                ...
+            &lt;/kanban&gt;
+        &lt;/field&gt;
+        ...
+    &lt;/record&gt;
+                </code>
+            </pre>
+        </div>
+    </div>
+    <div class="oe_row oe_spaced">
+        <h2 class="oe_slogan">Extra Decoration on List View</h2>
+        <div class="w3-content w3-display-container">
+            <div class="table-responsive">
+            <table class="table table-bordered table-sm">
+                <tbody>
+                    <tr class="bg-primary"><td>decoration-bg-primary</td></tr>
+                    <tr class="bg-primary-light"><td>decoration-bg-primary-light</td></tr>
+                    <tr class="bg-info"><td>decoration-bg-info</td></tr>
+                    <tr class="bg-info-light"><td>decoration-bg-info-light</td></tr>
+                    <tr class="bg-success"><td>decoration-bg-success</td></tr>
+                    <tr class="bg-success-light"><td>decoration-bg-success-light</td></tr>
+                    <tr class="bg-warning"><td>decoration-bg-warning</td></tr>
+                    <tr class="bg-warning-light"><td>decoration-bg-warning-light</td></tr>
+                    <tr class="bg-danger"><td>decoration-bg-danger</td></tr>
+                    <tr class="bg-danger-light"><td>decoration-bg-danger-light</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="oe_row oe_spaced">
+        <h2 class="oe_slogan">Set table's cell width auto for tree view</h2>
+        <div class="w3-content w3-display-container">
+            <pre class="bg-black">
+                <code>
+    e.g.
+    &lt;tree cell_width_auto="1" ...&gt;
+        ...
+        ...
+    &lt;/tree&gt;
+                </code>
+            </pre>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="iris_res_config_setting_form_view" model="ir.ui.view">
+        <field name="name">iris.res.config.setting.form.view</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base_setup.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//div[@data-key='general_settings']//div[@id='business_documents']" position="before">
+                <div>
+                    <h2>IRIS Integration</h2>
+                    <div class="row mt16 o_settings_container" id="iris_integration">
+                        <div class="content-group">
+                            <div class="row mt16">
+                                <label string="API" for="iris_api_id" class="col-lg-3 o_light_label"/>
+                                <field name="iris_api_id" class="oe_inline"/>
+                            </div>
+                            <div class="row">
+                                <label string="API KEY" for="iris_api_key" class="col-lg-3 o_light_label" />
+                                <field name="iris_api_key" class="oe_inline"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </xpath>
+        </field>
+    </record>
+</odoo>

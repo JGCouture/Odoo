@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="apply_btn_message_wizard_form" model="ir.ui.view">
+        <field name="name">submit.task.message.wizar.form</field>
+        <field name="model">submit.task.message</field>
+        <field name="arch" type="xml">
+            <form >
+                <p class="text-left">
+                    Child Task not done yet?????
+                </p>
+            <footer>
+                <button name="action_ok" string="Ok" type="object" default_focus="1" class="oe_highlight"/>
+            </footer>
+            </form>
+        </field>
+    </record>
+
+     <record id="apply_btn_message_project_task_wizard_form" model="ir.ui.view">
+        <field name="name">submit.task.message.wizar.form</field>
+        <field name="model">project.task</field>
+        <field name="arch" type="xml">
+            <form >
+                <p class="text-left">
+                    Sub task's are not completed yet..!
+                    Do you still want to move next stage ?
+                </p>
+            </form>
+        </field>
+    </record>
+
+    <record id="apply_btn_message_wizard_form_action" model="ir.actions.act_window">
+        <field name="name">submit.task.message</field>
+        <field name="res_model">submit.task.message</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

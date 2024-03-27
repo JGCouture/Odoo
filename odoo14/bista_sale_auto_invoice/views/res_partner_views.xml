@@ -1,0 +1,16 @@
+<odoo>
+    <data>
+        <record id="view_partner_form_invoice_create_send_inh" model="ir.ui.view">
+            <field name="name">view.partner.form.invoice.create.send.inh</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='category_id']" position="after">
+                	<field name="auto_create_invoice" />
+                	<field name="auto_validate_invoice" />
+                	<field name="auto_send_mail_invoice" />
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

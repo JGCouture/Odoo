@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="inherit_sign_template_company_dependent">
+            <field name="name">sign.template.form</field>
+            <field name="model">sign.template</field>
+            <field name="inherit_id" ref="sign.sign_template_view_form"/>
+            <field name="arch" type="xml">
+                <field name="group_ids" position="after">
+                    <field name="company_id" options='{"no_quick_create": True,"no_edit": True,"no_open": True, "no_create": True}'/>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</odoo>

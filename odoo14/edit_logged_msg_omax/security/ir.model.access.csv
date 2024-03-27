@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+edit_logged_msg_omax.access_mail_message_history,access_mail_message_history,edit_logged_msg_omax.model_mail_message_history,,1,1,1,1

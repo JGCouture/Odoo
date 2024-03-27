@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template>
+    <t t-extend="FieldMany2ManyTag">
+        <t t-jquery="span:first" t-operation="prepend">
+            <t t-if="isDownloadable">
+                <a class="fa fa-download text-primary o_download mr-1" t-att-data-res_id="el.id"/>
+            </t>
+        </t>
+    </t>
+</template>
