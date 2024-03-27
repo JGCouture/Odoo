@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+        <record model="ir.ui.view" id="inherit_coupen_program_zbs">
+            <field name="name">coupon.program.form</field>
+            <field name="model">coupon.program</field>
+            <field name="inherit_id" ref="coupon.coupon_program_view_promo_program_form"/>
+            <field name="arch" type="xml">
+                <field name="company_id" position="before">
+                    <field name="code_in_chines"/>
+                    <field name="allow_cumulative"/>
+                    <field name="limit_per_customer"/>
+                    <field name="other_program_ids" domain="[('promo_code_usage','=','code_needed')]" widget="many2many_tags"/>
+                </field>
+                <field name="discount_specific_product_ids" position="before">
+                    <field name="discount_most_expensive" attrs="{'invisible': [('discount_apply_on','!=','specific_products')]}"/>
+                </field>
+            </field>
+        </record>
+
+</odoo>

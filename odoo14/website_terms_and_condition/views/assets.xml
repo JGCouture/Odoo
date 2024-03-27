@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="assets_frontend_inherit" inherit_id="web.assets_frontend" name="wt assets frontend">
+            <xpath expr="." position="inside">
+                <link rel="stylesheet" type="text/scss" href="/website_terms_and_condition/static/src/scss/terms.scss" />
+            </xpath>
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/website_terms_and_condition/static/src/js/ach_form.js"/>
+                <script type="text/javascript" src="/website_terms_and_condition/static/src/js/jq-signature.js"/>
+                <script type="text/javascript" src="/website_terms_and_condition/static/src/js/terms.js"/>
+                <script type="text/javascript" src="/website_terms_and_condition/static/src/js/online_ordering.js"/>
+                <script type="text/javascript" src="/website_terms_and_condition/static/src/js/address.js"/>
+            </xpath>
+        </template>
+    </data>
+</odoo>

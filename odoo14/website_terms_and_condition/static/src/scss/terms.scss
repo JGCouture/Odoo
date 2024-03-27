@@ -1,0 +1,68 @@
+.form-check{
+	.read_more_btn, .online_ordering_btn{
+		border: none;
+	    background: no-repeat;
+	    color: #875a7b;
+	    outline: none;
+	    font-weight: 800;
+	}
+	.read_more_btn:focus{
+	    outline: none;
+		border: none;
+	}
+	.bd-example-modal-lg{
+		.modal-header{
+			border-bottom: none !important;
+
+			.fa-times{
+				outline: none !important;
+			}
+		}
+	}
+}
+#online_ordering_modal{
+	.modal-footer{
+		align-self: center;
+		border-top: none !important;
+	}
+	.modal-body{
+		.content_main_cl{
+			border: 3px solid black;
+			padding: 10px;
+			input{
+				border: none !important;
+				width: 75%;
+				outline: none;
+				border-bottom: 2px solid !important;
+			}
+			input[type="radio"]{
+				margin-top: 9px;
+				margin-right: 5px;
+				width: fit-content;
+			}
+			.day_input_cl{
+				label{
+					width: 85px;
+				}
+				input{
+					width: 75%;
+				}
+			}
+			.order_notification{
+				input{
+					width: 48%;
+				}
+			}
+			.delivery_free{
+				input{
+					width: 27%;
+				}
+			}
+			.free_delivery_min_amount{
+				input{
+					width: 60%;
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<!-- Copyright (c) 2018-Present Webkul Software Pvt. Ltd. (<https://webkul.com/>) -->
+<!-- See LICENSE file for full copyright and licensing details. -->
+    <data>
+        <record id="view_order_form_recurring" model="ir.ui.view">
+            <field name="name">sale.order.form.recurring</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//sheet//div[@class='oe_button_box']" position="inside">
+                    <button name="attachment_tree_view_action"
+                        class="oe_stat_button"
+                        icon="fa-paperclip"
+                        type="object">
+                        <field name="attachment_count" widget="statinfo" string="Attachment(s)"/>
+                    </button>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

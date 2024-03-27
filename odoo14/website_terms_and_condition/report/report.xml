@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<record id="action_report_ordering" model="ir.actions.report">
+        <field name="name">Online Ordering</field>
+        <field name="model">online.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">website_terms_and_condition.report_ordering</field>
+        <field name="report_file">website_terms_and_condition.report_ordering</field>
+        <field name="binding_model_id" ref="model_online_order"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

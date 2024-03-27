@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data noupdate="1">
+    <record id="email_template_application_new_merchant_form" model="mail.template">
+        <field name="name">Notification: An new merchant application is submitted  </field>
+        <field name="model_id" ref="website_application.model_merchant_form"/>
+        <field name="subject">${ctx.get('subject')}</field>
+        <field name="email_from">${ctx.get('email_from')}</field>
+        <field name="email_to">${ctx.get('email_to')}</field>
+        <field name="reply_to">${ctx.get('reply_to')}</field>
+        <field name="body_html" type="html">
+        <div style="margin: 0px; padding: 0px;">
+            <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                Hello ,
+                <br/><br/>
+                <table border="0" width="100%" cellspacing="0" cellpadding="0" bgcolor="#f7f9fc">
+                <tbody>
+                <tr>
+                <td height="30"></td>
+                </tr>
+                <tr>
+                <td align="center">
+                <table style="min-width: 500px; width: 500px;" border="0" width="500" cellspacing="0" cellpadding="0" bgcolor="#eeeeee">
+                    <tbody>
+                    <tr>
+                    <td bgcolor="#EEEEEE" width="4"></td>
+                    <td bgcolor="#EEEEEE" width="30" height="36"></td>
+                    <td style="font-size: 16px; vertical-align: middle; color: #f9922b; padding-top: 2px; line-height: 20px;" align="left" bgcolor="#EEEEEE"><strong>KwickPOS New Merchant Application   </strong></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <table style="min-width: 500px; width: 500px;" border="0" width="500" cellspacing="0" cellpadding="0" bgcolor="#eeeeee">
+                    <tbody id="emailFieldsTableBody">
+                        <tr id="row_211" class="questionRow">
+                        <td id="question_211" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="white">Account Information:</td>
+                        <td id="value_211" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="white">${ctx.get('account_type_string')}</td>
+                        </tr>
+                        <tr id="row_171" class="questionRow">
+                        <td id="question_171" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="#f3f3f3">Old Mid</td>
+                        <td id="value_171" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="#f3f3f3">${object.old_mid} </td>
+                        </tr>
+                        <tr id="row_172" class="questionRow">
+                        <td id="question_172" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="white">Add Paper Plan ($14.95 / Month)</td>
+                        <td id="value_172" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="white"> ${ctx.get('is_add_paper_plan_string')}</td>
+                        </tr>
+                        <tr id="row_173" class="questionRow">
+                        <td id="question_173" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="#f3f3f3">Add Supply Order</td>
+                        <td id="value_173" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="#f3f3f3">Checkbooks:${object.checkbook}<br/> Tips Trays:${object.tips_trays}<br/>No Supply Order Needed:${object.no_supply_order_needed}</td>
+                        </tr>
+
+                        <tr id="row_176" class="questionRow">
+                        <td id="question_176" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="white">Standalone OR Semi-Integration </td>
+                        <td id="value_176" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="white">${ctx.get('standalone_or_semi')}</td>
+                        </tr>
+                        <tr id="row_177" class="questionRow">
+                        <td id="question_177" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="#f3f3f3">Specify your equipment type</td>
+                        <td id="value_177" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="#f3f3f3">${object.equipment_type}</td>
+                        </tr>
+                        <tr id="row_169" class="questionRow">
+                        <td id="question_169" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="white">Equipment</td>
+                        <td id="value_169" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="white">${object.equipment}</td>
+                        </tr>
+                        <tr id="row_113" class="questionRow">
+                        <td id="question_113" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="#f3f3f3">Bill to?</td>
+                        <td id="value_113" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="#f3f3f3">${ctx.get('bill_to_string')}</td>
+                        </tr>
+                        <tr id="row_107" class="questionRow">
+                        <td id="question_107" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="white">Equipment Quantity</td>
+                        <td id="value_107" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="white">${object.equipment_quantity}</td>
+                        </tr>
+                        <tr id="row_179" class="questionRow">
+                        <td id="question_179" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="#f3f3f3">Features</td>
+                        <td id="value_179" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="#f3f3f3">Restaurant:${object.feature_restaurant}<br/>Retail:${object.feature_restaurant}<br/>with Tips:${object.feature_restaurant}<br/>Dial:${object.feature_restaurant}<br/>Pin-Debit:${object.feature_restaurant}<br/>Server ID:${object.feature_restaurant}<br/>IP:${object.feature_restaurant}<br/>Auto Batch:${object.feature_restaurant}<br/>Tip Suggestions:${object.feature_restaurant}<br/>Other:${object.feature_restaurant}</td>
+                        </tr>
+                        <tr id="row_92" class="questionRow">
+                        <td id="question_92" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="white">Feature ip input</td>
+                        <td id="value_92" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="white">${object.feature_ip_input}</td>
+                        </tr>
+                        <tr id="row_97" class="questionRow">
+                        <td id="question_97" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="#f3f3f3">Feature auto batch time input</td>
+                        <td id="value_97" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="#f3f3f3">${object.feature_auto_batch_time_input}</td>
+                        </tr>
+                        <tr id="row_93" class="questionRow">
+                        <td id="question_93" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="white">Feature tip suggestions input</td>
+                        <td id="value_93" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="white">${object.feature_tip_suggestions_input}</td>
+                        </tr>
+                        <tr id="row_94" class="questionRow">
+                        <td id="question_94" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="#f3f3f3">Feature other feature input</td>
+                        <td id="value_94" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="#f3f3f3">${object.feature_other_feature_input}</td>
+                        </tr>
+                        <tr id="row_95" class="questionRow">
+                        <td id="question_95" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="white">Deployment Method </td>
+                        <td id="value_95" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="white">${ctx.get('deployment_method_string')}</td>
+                        </tr>
+                        <tr id="row_96" class="questionRow">
+                        <td id="question_96" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="#f3f3f3">Ship with POS </td>
+                        <td id="value_96" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="#f3f3f3">${ctx.get('is_ship_with_pos_string')}</td>
+                        </tr>
+                        <tr id="row_180" class="questionRow">
+                        <td id="question_180" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="white">Ship Out Address</td>
+                        <td id="value_180" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="white">${object.ship_out_address}</td>
+                        </tr>
+                        <tr id="row_181" class="questionRow">
+                        <td id="question_181" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="#f3f3f3">Ship Out City</td>
+                        <td id="value_181" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="#f3f3f3">${object.ship_out_city}</td>
+                        </tr>
+                        <tr id="row_209" class="questionRow">
+                        <td id="question_209" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="white">Ship Out Zip Code</td>
+                        <td id="value_209" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="white">${object.ship_out_zip}</td>
+                        </tr>
+                        <tr id="row_206" class="questionRow">
+                        <td id="question_206" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="#f3f3f3">Ship Out State</td>
+                        <td id="value_206" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="#f3f3f3">${object.ship_out_state}</td>
+                        </tr>
+                        <tr id="row_183" class="questionRow">
+                        <td id="question_183" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="white">Reprogram Old MID</td>
+                        <td id="value_183" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="white">${object.reprogram_old_mid} </td>
+                        </tr>
+                        <tr id="row_184" class="questionRow">
+                        <td id="question_184" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="#f3f3f3">Pricing Type</td>
+                        <td id="value_184" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="#f3f3f3">${ctx.get('pricing_type_string')} </td>
+                        </tr>
+                        <tr id="row_185" class="questionRow">
+                        <td id="question_185" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="white">VISA/MC/DISCOVER Sales Discount Fee </td>
+                        <td id="value_185" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="white">${object.visa_sales_discount_fee}</td>
+                        </tr>
+                        <tr id="row_194" class="questionRow">
+                        <td id="question_194" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="#f3f3f3">VISA/MC/DISCOVER Auth Fee</td>
+                        <td id="value_194" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="#f3f3f3">${object.visa_auth_fee}</td>
+                        </tr>
+                        <tr id="row_195" class="questionRow">
+                        <td id="question_195" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="white">AMEX Sales Discount Fee</td>
+                        <td id="value_195" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="white">${object.amex_sales_discount_fee}</td>
+                        </tr>
+                        <tr id="row_196" class="questionRow">
+                        <td id="question_196" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="#f3f3f3">AMEX Auth Fee</td>
+                        <td id="value_196" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="#f3f3f3">${object.amex_auth_fee}</td>
+                        </tr>
+                        <tr id="row_197" class="questionRow">
+                        <td id="question_197" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="white">Cash Discount Rate</td>
+                        <td id="value_197" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="white">${object.cash_discount_rate}</td>
+                        </tr>
+                        <tr id="row_187" class="questionRow">
+                        <td id="question_187" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="#f3f3f3">Do you want Free Cash Discount Pricing List/Menu (For Massage ONLY)?</td>
+                        <td id="value_187" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="#f3f3f3">${ctx.get('if_want_free_cash_discount_string')}</td>
+                        </tr>
+                        <tr id="row_213" class="questionRow">
+                        <td id="question_213" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="white">>Monthly Fee</td>
+                        <td id="value_213" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="white">${object.monthly_fee} </td>
+                        </tr>
+
+                        <tr id="row_91" class="questionRow">
+                        <td id="question_91" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="white">Other Comment</td>
+                        <td id="value_91" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="white">${object.other_comment}</td>
+                        </tr>
+                        <tr id="row_114" class="questionRow">
+                        <td id="question_114" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="#f3f3f3">Date</td>
+                        <td id="value_114" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="#f3f3f3">${object.Date}</td>
+                        </tr>
+                        <tr id="row_99" class="questionRow">
+                        <td id="question_99" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="white">Your Sales Agent (销售名字) </td>
+                        <td id="value_99" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="white">${object.agent_name}</td>
+                        </tr>
+
+                        <tr id="row_166" class="questionRow">
+                        <td id="question_166" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="white">Agent Email (销售邮箱) </td>
+                        <td id="value_166" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="white">${object.agent_email}</td>
+                        </tr>
+                        <tr id="row_189" class="questionRow">
+                        <td id="question_189" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="#f3f3f3">Legal Name of Business (公司名字) </td>
+                        <td id="value_189" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="#f3f3f3">${object.name_of_company}</td>
+                        </tr>
+                        <tr id="row_190" class="questionRow">
+                        <td id="question_190" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="white">Doing Business As (招牌名字)</td>
+                        <td id="value_190" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="white">${object.dba}</td>
+                        </tr>
+
+                        <tr id="row_192" class="questionRow">
+                        <td id="question_192" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="white">Address (店铺地址)</td>
+                        <td id="value_192" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="white">${object.address}</td>
+                        </tr>
+                        <tr id="row_210" class="questionRow">
+                        <td id="question_210" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="#f3f3f3">City (城市)</td>
+                        <td id="value_210" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="#f3f3f3">${object.city}</td>
+                        </tr>
+                        <tr id="row_212" class="questionRow">
+                        <td id="question_212" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="white">State(州)</td>
+                        <td id="value_212" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="white">${object.state}</td>
+                        </tr>
+                        <tr id="row_128" class="questionRow">
+                        <td id="question_128" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="#f3f3f3">Zip Code (邮政编码)</td>
+                        <td id="value_128" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="#f3f3f3">${object.zip_code}</td>
+                        </tr>
+                        <tr id="row_129" class="questionRow">
+                        <td id="question_129" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="white">#1 Sign Date</td>
+                        <td id="value_129" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="white">${object.from_application_signature_date}</td>
+                        </tr>
+                        <tr id="row_131" class="questionRow">
+                        <td id="question_131" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="#f3f3f3">Business Phone Number (电话)</td>
+                        <td id="value_131" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="#f3f3f3">${object.business_phone_number}</td>
+                        </tr>
+                        <tr id="row_132" class="questionRow">
+                        <td id="question_132" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="white">Fax Number (传真)</td>
+                        <td id="value_132" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="white">${object.fax_number}</td>
+                        </tr>
+                        <tr id="row_216" class="questionRow">
+                        <td id="question_216" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="#f3f3f3">Federal Tax ID # (联邦报税号码)</td>
+                        <td id="value_216" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="#f3f3f3">${object.federal_tax_id}</td>
+                        </tr>
+                        <tr id="row_137" class="questionRow">
+                        <td id="question_137" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="white">Type of Business (哪一种生意)</td>
+                        <td id="value_137" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="white">${object.type_of_business}</td>
+                        </tr>
+                        <tr id="row_139" class="questionRow">
+                        <td id="question_139" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="#f3f3f3">Company Type</td>
+                        <td id="value_139" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="#f3f3f3">${ctx.get('company_type_string')}</td>
+                        </tr>
+                        <tr id="row_140" class="questionRow">
+                        <td id="question_140" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="white">Business Open Date (公司开始日期)</td>
+                        <td id="value_140" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="white">${object.open_date}</td>
+                        </tr>
+                        <tr id="row_141" class="questionRow">
+                        <td id="question_141" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="#f3f3f3">Estimated Monthly Sale Volume (预估月刷卡量) </td>
+                        <td id="value_141" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="#f3f3f3">${object.estimated_monthly_sale_volume}</td>
+                        </tr>
+                        <tr id="row_142" class="questionRow">
+                        <td id="question_142" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="white">Average Sales Amount (平均每笔刷卡金额)</td>
+                        <td id="value_142" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="white">${ctx.get('amex_string')}</td>
+                        </tr>
+
+                        <tr id="row_202" class="questionRow">
+                        <td id="question_202" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="white">Amex</td>
+                        <td id="value_202" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="white">${ctx.get('amex_string')}</td>
+                        </tr>
+                        <tr id="row_203" class="questionRow">
+                        <td id="question_203" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="#f3f3f3">Owner's Name (老板姓名)</td>
+                        <td id="value_203" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="#f3f3f3">${object.owner_name}</td>
+                        </tr>
+                            <tr id="row_202" class="questionRow">
+                        <td id="question_202" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="white">Email (邮箱)</td>
+                        <td id="value_202" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="white">${object.owner_email}</td>
+                        </tr>
+                        <tr id="row_203" class="questionRow">
+                        <td id="question_203" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="#f3f3f3">Tittle (头衔)</td>
+                        <td id="value_203" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="#f3f3f3">${object.owner_title}</td>
+                        </tr>
+                            <tr id="row_202" class="questionRow">
+                        <td id="question_202" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="white">Cell Phone Number (手机)</td>
+                        <td id="value_202" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="white">${object.owner_phone_number}</td>
+                        </tr>
+                        <tr id="row_203" class="questionRow">
+                        <td id="question_203" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="#f3f3f3">Home Address (住家地址) </td>
+                        <td id="value_203" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="#f3f3f3">${object.owner_home_address}</td>
+                        </tr>
+                            <tr id="row_202" class="questionRow">
+                        <td id="question_202" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="white">Home City (城市)</td>
+                        <td id="value_202" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="white">${object.owner_home_city}</td>
+                        </tr>
+                        <tr id="row_203" class="questionRow">
+                        <td id="question_203" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="#f3f3f3">Home State (州)</td>
+                        <td id="value_203" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="#f3f3f3">${object.owner_home_state}</td>
+                        </tr>
+                            <tr id="row_202" class="questionRow">
+                        <td id="question_202" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="white">Home Zip Code (邮政编号)</td>
+                        <td id="value_202" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="white">${object.owner_home_zip_code}</td>
+                        </tr>
+                        <tr id="row_203" class="questionRow">
+                        <td id="question_203" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="#f3f3f3">Social Security Number (社安)</td>
+                        <td id="value_203" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="#f3f3f3">${object.ssn}</td>
+                        </tr>
+                            <tr id="row_202" class="questionRow">
+                        <td id="question_202" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="white">Date of Birth (出生日期)</td>
+                        <td id="value_202" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="white">${object.owner_date_of_birth}</td>
+                        </tr>
+                        <tr id="row_203" class="questionRow">
+                        <td id="question_203" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="#f3f3f3">Driver License Number (驾照)</td>
+                        <td id="value_203" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="#f3f3f3">${object.owner_driver_license_number}</td>
+                        </tr>
+                            <tr id="row_202" class="questionRow">
+                        <td id="question_202" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="white">State Issued (驾照所在州)</td>
+                        <td id="value_202" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="white">${object.owner_state_issued}</td>
+                        </tr>
+                        <tr id="row_203" class="questionRow">
+                        <td id="question_203" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="#f3f3f3">Bank Name</td>
+                        <td id="value_203" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="#f3f3f3">${object.owner_bank_name}</td>
+                        </tr>
+                            <tr id="row_202" class="questionRow">
+                        <td id="question_202" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="white">Bank Routing </td>
+                        <td id="value_202" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="white">${object.owner_bank_routing}</td>
+                        </tr>
+                        <tr id="row_203" class="questionRow">
+                        <td id="question_203" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="#f3f3f3">Bank Account #</td>
+                        <td id="value_203" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="#f3f3f3">${object.owner_bank_account}</td>
+                        </tr>
+                             <tr id="row_202" class="questionRow">
+                        <td id="question_202" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="white">Signature </td>
+                        <td id="value_202" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="white"><img src="${ctx.get('signature')}" style="width: 300px;height: 80px;" /></td>
+                        </tr>
+                        <tr id="row_203" class="questionRow">
+                        <td id="question_203" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="#f3f3f3">Sign Date</td>
+                        <td id="value_203" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="#f3f3f3">${object.sign_date}</td>
+                        </tr>
+                             <tr id="row_202" class="questionRow">
+                        <td id="question_202" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="white">Personal Guarantee Signature </td>
+                        <td id="value_202" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="white"><img src="${ctx.get('personal_guarantee_signature')}" style="width: 300px;height: 80px;" /></td>
+                        </tr>
+                        <tr id="row_203" class="questionRow">
+                        <td id="question_203" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="#f3f3f3">Personal Guarantee Sign Date</td>
+                        <td id="value_203" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="#f3f3f3">${object.personal_guarantee_sign_date}</td>
+                        </tr>
+                             <tr id="row_202" class="questionRow">
+                        <td id="question_202" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="white">Client Initials</td>
+                        <td id="value_202" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="white"><img src="${ctx.get('client_initials_signature')}" style="width: 300px;height: 80px;" /></td>
+                        </tr>
+                        <tr id="row_203" class="questionRow">
+                        <td id="question_203" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="#f3f3f3">Print Client's Business Legal Name</td>
+                        <td id="value_203" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="#f3f3f3">${object.print_client_business_legal_name}</td>
+                        </tr>
+                             <tr id="row_202" class="questionRow">
+                        <td id="question_202" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="white">Client's Business Principal Signature </td>
+                        <td id="value_202" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="white"><img src="${ctx.get('client_business_principle_signature')}" style="width: 300px;height: 80px;" /></td>
+                        </tr>
+                        <tr id="row_203" class="questionRow">
+                        <td id="question_203" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="#f3f3f3">Print Name of Signer</td>
+                        <td id="value_203" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="#f3f3f3">${object.print_name_signer}</td>
+                        </tr>
+
+                        <tr id="row_202" class="questionRow">
+                        <td id="question_202" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="white">Client's Business Principle Title</td>
+                        <td id="value_202" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="white">${object.business_principle_title}</td>
+                        </tr>
+                        <tr>
+                            <td id="question_203" class="questionColumn" style="padding: 5px !important; width: 170px;" valign="top" bgcolor="#f3f3f3">Client's Business Principle Sign Date</td>
+                            <td id="value_203" class="valueColumn" style="padding: 5px !important; width: 286px;" bgcolor="#f3f3f3">${object.business_principle_sign_date}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table id="autoresponder-footer" border="0" width="500" cellspacing="0" cellpadding="0">
+                <tbody>
+                <tr>
+                <td style="font-size: 6px;" bgcolor="#f7f9fc" height="6"></td>
+                <td style="font-size: 6px;" bgcolor="#f7f9fc"></td>
+                </tr>
+                <tr style="font-size: 14px;">
+
+                </tr>
+                </tbody>
+                </table>
+                </td>
+                </tr>
+                <tr>
+                <td height="30"></td>
+                </tr>
+                </tbody>
+                </table>
+                <br/>
+                <br/>
+                Do not hesitate to contact us if you have any questions.
+                <br/>
+            </p>
+        </div>
+            </field>
+        <field name="auto_delete" eval="False"/>
+    </record>
+</data>
+
+
+</odoo>

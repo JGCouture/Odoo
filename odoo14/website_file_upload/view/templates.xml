@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<!-- Copyright (c) 2018-Present Webkul Software Pvt. Ltd. (<https://webkul.com/>) -->
+<!-- See LICENSE file for full copyright and licensing details. -->
+  <data>
+    <template id="assets_frontend_stock" inherit_id="website.assets_frontend" name="Stock">
+      <xpath expr="." position="inside">
+          <link rel='stylesheet' href='/website_file_upload/static/src/scss/website_file_upload.scss'/>
+          <script type="text/javascript" src="/website_file_upload/static/src/js/website_file_upload.js"></script>
+          <script type="text/javascript" src="/website_file_upload/static/src/js/payment.js"></script>
+      </xpath>
+    </template>
+
+    <template id="website_file_upload_payment" inherit_id="website_sale.payment" active="True" customize_show="True" name="File Upload">
+      <xpath expr="//div[@id='oe_structure_website_sale_payment_1']" position="after">
+        <div class="row">
+          <div class="modal fade" id="file_upload_modal" role="dialog">
+            <div class="modal-dialog">
+              <div class="modal-content order-attachment-upload">
+                <div class="modal-body">
+                  <button type="button" class="close attachment-close" data-dismiss="modal"><img src="/website_file_upload/static/src/img/icon-cross.png"/></button>
+                  <form id="file_upload_form" action="/shop/payment/file_upload" method="post" class="s_website_form form-horizontal container-fluid mt32" enctype="multipart/form-data">
+                    <center><div class="upload-message">
+                      <strong> Select File to Upload</strong>
+                    </div></center>
+                    <div class="clearfix"/>
+                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+<!--                    <div class="input-group col-md-offset-1 col-md-10">-->
+                      <input type="file" name="Upload-File" required="required" class="form-control"/>
+<!--                      <div id="file-upload-name" tabindex="500"  class="form-control" >-&#45;&#45;&#45;&#45;Choose File To Upload-&#45;&#45;&#45;&#45;-->
+<!--                      </div>-->
+<!--                      <span class="input-group-btn">-->
+<!--                        <a class="btn btn-primary file_browse_btn fa fa-folder-open-o">&#032;Browse...</a>-->
+<!--                      </span>-->
+<!--                    </div>-->
+                    <br/>
+                    <button type="submit" class="btn btn-primary col-md-offset-4 file_upload_btn fa fa-upload disabled" style="display:none;font-size:16px;margin:0px">&#032;Upload File</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 attachment">
+            <input type="hidden" id="required_doc" t-att-value="website_sale_order.get_required_doc()"/>
+            <input type="hidden" id="required_doc_list" t-att-value="website_sale_order.get_required_doc_list()"/>
+            <input type="hidden" id="sale_order_temp" t-att-value="website_sale_order.id"/>
+          <a class="btn btn-primary add-attachment fa fa-plus" style="cursor:pointer;font-weight:bold">&#032;Add Attachment...</a>
+            <div t-if="order.attachment_count &gt; 0"  style="font-size: 13px;display:inline-block;">Attachment(s):&#032;[<t t-esc="order.attachment_count"/> files]
+<!--            <a class="btn btn-info fa fa-paperclip view-attachment" t-if="attachment_objs">&#032;View Attachment(s)</a>-->
+            </div><br/>
+            <t t-if="attachment_objs">
+                <t t-set="uploaded_files" t-value="len(attachment_objs)"/>
+            </t>
+            <t t-else="">
+              <t t-set="uploaded_files" t-value="0"/>
+            </t>
+
+            <input type="hidden" id="uploaded_att" t-att-value="uploaded_files"/>
+
+            <div class="attachment-history" t-if="attachment_objs">
+                <t t-set="i" t-value="1"/>
+
+                <table class="table table-striped table-condensed col-md-12" style="font-size:13px">
+                  <thead>
+                    <tr>
+                      <th class="col-md-1">Sr.</th>
+                      <th class="col-md-4">Name</th>
+                      <th class="col-md-1 text-right">Remove</th>
+                    </tr>
+                  </thead>
+                  <t t-foreach="attachment_objs" t-as="attachment">
+                    <tbody>
+                      <input type="hidden" t-att-value="attachment.id" name="attachment-id" id="attachment-id"/>
+                      <tr>
+                        <td><t t-esc="i"/></td>
+                        <td><t t-esc="attachment.name"/></td>
+                        <td class="text-right"><a id="attachment-remove" style="cursor:pointer;color:red"><i class="fa fa-trash-o"></i></a></td>
+                      </tr>
+                    </tbody>
+                    <t t-set="i" t-value="i+1"/>
+                  </t>
+                </table>
+            </div>
+            <br/>
+          </div>
+        </div>
+
+        <div class="row form-group">
+            <div t-attf-class="form-group col-lg-6 div_find_ref">
+                <label class="col-form-label label-optional" for="find_ref">
+                    How did you find us?
+                </label>
+                <select name="find_ref" id="find_us_pay" t-attf-class="form-control" data-init="1" >
+                    <option value=""></option>
+                    <option value="referral" t-att-selected="website_sale_order.find_ref == 'referral' if website_sale_order else ''">Referral</option>
+                    <option value="online_ad" t-att-selected="website_sale_order.find_ref == 'online_ad' if website_sale_order else ''">Online ad</option>
+                </select>
+            </div>
+            <div t-attf-class="form-group col-lg-6 div_agent" id="div_agent">
+                <label class="col-form-label" for="x_studio_agent">Agent Code</label>
+                <select name="x_studio_agent" id="agent_select_pay" t-attf-class="form-control" data-init="1">
+                    <option value="">Agent...</option>
+                    <t t-foreach="request.env['hr.employee'].sudo().search([('is_a_agent','=',True),('company_id','=',website.company_id.id)])" t-as="user">
+                        <option t-att-value="user.id" t-att-data-start="user.name[0:2]" t-att-selected="website_sale_order.x_studio_many2one_field_8mpil and website_sale_order.x_studio_many2one_field_8mpil.id == user.id if website_sale_order else ''">
+                             <t t-if="user.barcode">
+                                 <t t-esc="user.barcode"/>
+                             </t>
+                             <t t-else="">
+                                <t t-esc="user.display_name"/>
+                             </t>
+                        </option>
+                    </t>
+                </select>
+            </div>
+            <div t-attf-class="form-group col-lg-6 div_ref {{ 'd-none' if website_sale_order and website_sale_order.find_ref != 'referral' else '' }}" id="div_ref">
+                <label class="col-form-label label-optional" for="ref">Referral</label>
+                <input type="text" id='ref_pay_pay' class="mr8" t-att-value="website_sale_order.referal_code if website_sale_order else ''" name="ref" t-attf-class="form-control"/>
+            </div>
+            <div t-attf-class="form-group col-lg-6 div_online_add {{ 'd-none' if website_sale_order and website_sale_order.find_ref != 'online_ad' else '' }}" id="div_online_add">
+                <label class="col-form-label" for="online_add">Select Ads</label>
+                <select name="online_add" id="online_add_pay" t-attf-class="form-control online_add_cl" data-init="1">
+                    <option value="">Select Ads</option>
+                    <option value="wechat" t-att-selected="website_sale_order.online_add == 'wechat' if website_sale_order else ''">WeChat</option>
+                    <option value="google" t-att-selected="website_sale_order.online_add == 'google' if website_sale_order else ''">Google</option>
+                    <option value="facebook" t-att-selected="website_sale_order.online_add == 'facebook' if website_sale_order else ''">Facebook</option>
+                    <option value="instagram" t-att-selected="website_sale_order.online_add == 'instagram' if website_sale_order else ''">Instagram</option>
+                    <option value="other" t-att-selected="website_sale_order.online_add == 'other' if website_sale_order else ''">Others</option>
+                </select>
+            </div>
+             <div t-attf-class="form-group col-lg-6 other_add {{ 'd-none' if (website_sale_order and website_sale_order.find_ref != 'online_ad') or (website_sale_order and website_sale_order.find_ref == 'online_ad' and website_sale_order.online_add != 'other') else '' }}" id="other_add">
+                <label class="col-form-label" for="other_add">Other Ads</label>
+                <input type="text" id='text_other_add_pay' t-att-value="website_sale_order.other_add if website_sale_order else ''" class="mr8" name="other_add" t-attf-class="form-control"/>
+            </div>
+
+            <div t-attf-class="form-group col-lg-6 div_order_type" id="div_order_type">
+                <label class="col-form-label" for="online_add"><b>Order Type*</b></label>
+                <select name="order_type" id="order_type_pay" required="required" t-attf-class="form-control order_type" data-init="1">
+                    <option value="">Select Order Type</option>
+                    <option value="new" t-att-selected="website_sale_order.sale_order_type == 'new' if website_sale_order else ''">New</option>
+                    <option value="conversion" t-att-selected="website_sale_order.sale_order_type == 'conversion' if website_sale_order else ''">Conversion</option>
+                    <option value="add_ons" t-att-selected="website_sale_order.sale_order_type == 'add_ons' if website_sale_order else ''">Add-On</option>
+                    <option value="accessories" t-att-selected="website_sale_order.sale_order_type == 'accessories' if website_sale_order else ''">Accessories</option>
+                    <option value="other" t-att-selected="website_sale_order.sale_order_type == 'other' if website_sale_order else ''">Other</option>
+                </select>
+            </div>
+        </div>
+      </xpath>
+    </template>
+
+    <template id="file_upload_payment" inherit_id="website_sale.payment">
+      <xpath expr="//div[@class='col-12 col-xl order-xl-1 oe_cart']" position="after" >
+        <div class="alert alert-danger col-md-12 wk_file_failed" t-if="upload_success == '0'">
+            <center><strong>Failed!!!</strong> File Can Not Be Uploaded.</center>
+        </div>
+        <div class="alert alert-success col-md-12 wk_file_success" t-if="upload_success == '1'">
+            <center><strong>Success!!!</strong> File Uploaded Successfully.</center>
+        </div>
+      </xpath>
+      <xpath expr="//div[@t-if='not website_sale_order.amount_total']" position="replace">
+        <div class="js_payment mt-3" t-if="not website_sale_order.amount_total" id="payment_method">
+              <form target="_self" action="/shop/payment/validate" method="post" class="float-right">
+                  <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+                  <a role="button" class="btn btn-primary a-submit final-submit" href="#">
+                      <span t-if="order.amount_total &gt; 0">Pay Now <span class="fa fa-chevron-right"></span></span>
+                      <span t-if="order.amount_total == 0">Confirm Order <span class="fa fa-chevron-right"></span></span>
+                  </a>
+              </form>
+          </div>
+      </xpath>
+  </template>
+  </data>
+</odoo>

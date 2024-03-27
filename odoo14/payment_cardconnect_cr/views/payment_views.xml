@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="cardconnect_form">
+        <input type='hidden' name='reference' t-att-value='reference'/>
+        <input type='hidden' name='amount' t-att-value='amount or "0.0"'/>
+        <input type='hidden' name='currency' t-att-value='currency.name'/>
+        <input type="hidden" name="order_id" t-att-value="order_id"/>
+        <input type="hidden" name="invoice_id" t-att-value="invoice_id"/>
+    </template>
+
+    <template id="cardconnect_s2s_form">
+        <input type="hidden" name="data_set" data-create-route="/payment/cardconnect/s2s/create_json_3ds"/>
+        <input type="hidden" name="acquirer_id" t-att-value="id"/>
+        <input type="hidden" name="order_id" t-att-value="order_id"/>
+        <input type="hidden" name="invoice_id" t-att-value="invoice_id"/>
+        <input t-if="return_url" type="hidden" name="return_url" t-att-value="return_url"/>
+        <input t-if="partner_id" type="hidden" name="partner_id" t-att-value="partner_id"/>
+            <div t-attf-class="row mt8 #{'' if bootstrap_formatting else 'o_card_brand_detail'}">
+                <div t-att-class="'form-group col-lg-12' if bootstrap_formatting else 'form-group'">
+                    <input type="tel" name="cc_number" id="cc_number" class="form-control" placeholder="Card number" data-is-required="true"/>
+                    <div class="card_placeholder"></div>
+                    <div class="visa"></div>
+                    <input type="hidden" name="cc_brand" value=""/>
+                </div>
+                <div t-att-class="'form-group col-lg-5' if bootstrap_formatting else 'form-group'">
+                    <input type="text" name="cc_holder_name" id="cc_holder_name" class="form-control" placeholder="Cardholder name" data-is-required="true"/>
+                </div>
+                <div t-att-class="'form-group col-lg-3' if bootstrap_formatting else 'form-group'">
+                    <input type="text" name="cc_expiry" id="cc_expiry" class="form-control" maxlength="7" placeholder="Expires (MM / YY)" data-is-required="true"/>
+                </div>
+                <div t-att-class="'form-group col-lg-4' if bootstrap_formatting else 'form-group'">
+                    <input type="text" name="cc_cvc" id="cc_cvc" class="form-control" maxlength="4" placeholder="CVC" data-is-required="true"/>
+                </div>
+            </div>
+
+    </template>
+
+    <template id="cardconnect_s2s_ach_form">
+        <input type="hidden" name="data_set" data-create-route="/payment/cardconnect/s2s/create_json_3ds"/>
+        <input type="hidden" name="acquirer_id" t-att-value="id"/>
+        <input t-if="return_url" type="hidden" name="return_url" t-att-value="return_url"/>
+        <input t-if="partner_id" type="hidden" name="partner_id" t-att-value="partner_id"/>
+        <div class="form-group">
+            <label t-attf-for="o_authorize_bank_name_{{acquirer_id}}" class="col-form-label">Bank Name</label>
+            <input type="text" name="bank_name" id="bank_name" t-attf-id="o_authorize_bank_name_{{acquirer_id}}" required="" class="form-control"/>
+        </div>
+        <div class="form-group">
+            <label t-attf-for="o_authorize_account_name_{{acquirer_id}}" class="col-form-label">Name On Account</label>
+            <input type="text" name="account_name" id="account_name" t-attf-id="o_authorize_account_name_{{acquirer_id}}" required="" class="form-control"/>
+        </div>
+        <div class="form-group">
+            <label t-attf-for="o_authorize_account_number_{{acquirer_id}}" class="col-form-label">Account Number</label>
+            <input type="text" name="account_number" id="account_number" t-attf-id="o_authorize_account_number_{{acquirer_id}}" required="" class="form-control"/>
+        </div>
+        <div class="form-group">
+            <label t-attf-for="o_authorize_aba_number_{{acquirer_id}}" class="col-form-label">ABA Routing Number</label>
+            <input type="text" name="aba_number" id="aba_number" t-attf-id="o_authorize_aba_number_{{acquirer_id}}" required="" class="form-control"/>
+        </div>
+        <div class="form-group">
+            <label t-attf-for="o_authorize_account_type_{{acquirer_id}}" class="col-form-label">Bank Account Type</label>
+            <select t-attf-id="o_authorize_account_type_{{acquirer_id}}" required="" class="form-control">
+                <option value="checking">Personal Checking</option>
+                <option value="savings">Personal Savings</option>
+                <option value="businessChecking">Business Checking</option>
+            </select>
+        </div>
+    </template>
+
+
+    <template id="payment_tokens_list_cc" inherit_id="payment.payment_tokens_list" name="Payment Tokens list">
+        <xpath expr="//t[@t-foreach='pms']//div[hasclass('o_payment_acquirer_select')]" position="replace">
+            <div class="card-body o_payment_acquirer_select">
+                <label>
+                    <input t-if="mode == 'payment'" type="radio" name="pm_id" t-att-value="pm.id" t-att-checked="checked_pm_id == pm.id"/>
+                    <span class="payment_option_name" t-esc="pm.name"/>
+                    <t t-if="acq_extra_fees and acq_extra_fees.get(pm.acquirer_id)">
+                        <span class="badge badge-pill badge-secondary">+
+                            <t t-esc="acq_extra_fees[pm.acquirer_id]" t-options='{"widget": "monetary", "display_currency": acq_extra_fees["currency_id"]}'/>
+                            Fee
+                        </span>
+                    </t>
+                    <t t-elif="pm.acquirer_id.fees_active">
+                        <small class="text-muted">(Some fees may apply)</small>
+                    </t>
+                    <t t-if="pm.verified">
+                        <i class="fa fa-check text-success" title="This payment method is verified by our system." role="img" aria-label="Ok"></i>
+                    </t>
+                    <t t-else="">
+                        <i class="fa fa-check text-muted" title="This payment method has not been verified by our system." role="img" aria-label="Not verified"></i>
+                    </t>
+                    <div t-if="pm.acquirer_id.state == 'test'" class="badge-pill badge-warning float-right" style="margin-left:5px">
+                        Test Mode
+                    </div>
+                </label>
+                <button t-if="mode == 'manage'" name="delete_pm" t-att-value="pm.id" class="btn btn-primary btn-sm float-right">
+                    <i class="fa fa-trash"></i>
+                    Delete
+                </button>
+            </div>
+
+
+        </xpath>
+    </template>
+
+</odoo>

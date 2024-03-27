@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_online_order" model="ir.actions.report">
+        <field name="name">Online Order Form</field>
+        <field name="model">online.order.form</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">website_application.online_order_report</field>
+        <field name="report_file">website_application.online_order_report</field>
+
+        <field name="binding_model_id" ref="model_online_order_form"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="base.paperformat_euro"/>
+
+    </record>
+</odoo>

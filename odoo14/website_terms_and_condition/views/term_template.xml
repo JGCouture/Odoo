@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="pos_term_template_tree" model="ir.ui.view">
+		<field name="name">pos.term.template.tree</field>
+		<field name="model">pos.term.template</field>
+		<field name="arch" type="xml">
+			<tree string="">
+				<field name="name"/>
+			</tree>
+		</field>
+	</record>
+
+    <record id="pos_term_template_form" model="ir.ui.view">
+		<field name="name">pos.term.template.form</field>
+		<field name="model">pos.term.template</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name" required="True"/>
+                    </group>
+                    <notebook>
+                        <page string="Term &amp; Conditions">
+                            <field name="term"/>
+                        </page>
+                        <page string="Products">
+                            <field name="product_ids">
+                                <tree>
+                                    <field name="display_name"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+     <record id="action_pos_termp_template" model="ir.actions.act_window">
+		<field name="name">Term &amp; Conditions Template</field>
+        <field name="res_model">pos.term.template</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context"></field>
+    </record>
+
+	<menuitem id="menu_pos_term_template" action="action_pos_termp_template" name="POS Term Template" parent="website.menu_website_global_configuration" sequence="4"/>
+
+</odoo>

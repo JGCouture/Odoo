@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2016-Present Webkul Software Pvt. Ltd. (<https://webkul.com/>) -->
+<!-- See LICENSE file for full copyright and licensing details. -->
+<!-- License URL : https://store.webkul.com/license.html/ -->
+<odoo>
+	<data>
+
+		<record id="website_application_inherit_rma_wizard_id" model="ir.ui.view">
+            <field name="name">rma.wizard.form.website_application.inherit</field>
+            <field name="model">rma.wizard</field>
+            <field name="inherit_id" ref="rma.rma_wizard_id"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='qty_return']" position="after">
+                	<field name="ticket" />
+            	</xpath>
+            </field>
+        </record>
+        <record id="website_application_inherit_rma_form_id" model="ir.ui.view">
+            <field name="name">rma.form.website_application.inherit</field>
+            <field name="model">rma.rma</field>
+            <field name="inherit_id" ref="rma.rma_form_id"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='resolve_date']" position="after">
+                	<field name="ticket" />
+                    <field name="ticket_iris_link" widget="url"/>
+            	</xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="online_order_tree_view" model="ir.ui.view">
+		<field name="name">online.order.tree</field>
+		<field name="model">online.order</field>
+		<field name="arch" type="xml">
+			<tree string="Online Ordering">
+				<field name="sequence" widget="handle" readonly="1"/>		
+				<!-- <field name="name"/> -->
+				<field name="partner_id"/>
+<!--				<field name="plan_choice"/>-->
+				<field name="order_notification"/>
+				<field name="delivery_zone"/>
+			</tree>
+		</field>
+	</record>
+
+	<record id="kwickpos_online_order_form_id_inherited" model="ir.ui.view">
+            <field name="name">online.order.form.inherited.in.website_terms_and_condition</field>
+            <field name="model">online.order.form</field>
+            <field name="inherit_id" ref="website_application.kwickpos_online_order_form_id"/>
+            <field name="arch" type="xml">
+                <field name="pos_system" position="before">
+                	<field name="partner"/>
+					<field name="sale_order_id"/>
+           	 	</field>
+				<field name="account_number" position="before">
+                	<field name="bank"/>
+           	 	</field>
+            </field>
+	</record>
+
+	<record id="online_order_form_view" model="ir.ui.view">
+		<field name="name">online.order.form</field>
+		<field name="model">online.order</field>
+		<field name="arch" type="xml">
+			<form string="Online Ordering">
+				<sheet>
+					<div class="oe_title">
+                        <h1>
+                            <field name="partner_id" readonly="1"/>
+                        </h1>
+                    </div>
+					<group>
+						<!-- <field name="name"/> -->
+						 <field name="need_website"/>
+						 <field name="website_address"/>
+						<!-- <field name="website_option"/> -->
+						<!-- <field name="preferred_website1"/> -->
+						<!-- <field name="preferred_website2"/> -->
+						<!-- <field name="preferred_website3"/> -->
+					 </group>
+					<group string="Business Hours">
+						<group string="First Shift">
+							<field name="monday"/>
+							<field name="tuesday"/>
+							<field name="wednesday"/>
+							<field name="thursday"/>
+							<field name="friday"/>
+							<field name="saturday"/>
+							<field name="sunday"/>
+						</group>
+						<group string="Second Shift">
+							<field name="monday_shift2"/>
+							<field name="tuesday_shift2"/>
+							<field name="wednesday_shift2"/>
+							<field name="thursday_shift2"/>
+							<field name="friday_shift2"/>
+							<field name="saturday_shift2"/>
+							<field name="sunday_shift2"/>
+						</group>
+					</group>
+					<group>
+						<group>
+							<field name="sale_order_id"/>
+							<field name="sale_tax"/>
+							<field name="need_chinese"/>
+							<field name="menu_other"/>
+<!--							<field name="service_type"/>-->
+<!--							<field name="plan_choice"/>-->
+							<field name="order_notification"/>
+							<field name="email_address"/>
+							<field name="backup_phone_number"/>
+							<field name="do_delivery"/>
+						</group>
+						<group>
+							<field name="delivery_distance"/>
+							<field name="min_order_amount"/>
+							<field name="delivery_free"/>
+							<field name="pickup_order_time"/>
+							<field name="delivery_order_time"/>
+							<field name="payment_option"/>
+							<field name="use_google_business"/>
+<!--							<field name="free_delivery_min_amount"/>-->
+<!--							<field name="delivery_zone"/>-->
+						</group>
+					</group>
+					<group>
+						<field name="notes"/>
+					</group>
+					<group>
+						<field name="name_address"/>
+						<field name="contact_details"/>
+						<field name="bank_details"/>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+<!--	<record id="online_ordering_action" model="ir.actions.act_window">-->
+<!--		<field name="name">Online Ordering</field>-->
+<!--		<field name="type">ir.actions.act_window</field>-->
+<!--		<field name="res_model">online.order</field>-->
+<!--		<field name="view_mode">tree,form</field>-->
+<!--	</record>-->
+
+	 <record id="online_ordering_action" model="ir.actions.act_window">
+		<field name="name">Online Ordering</field>
+        <field name="res_model">online.order</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context"></field>
+    </record>
+
+	<menuitem id="online_ordering_root" name="Online Ordering" parent="website.menu_website_configuration" sequence="4"/>
+	<menuitem id="category_menu" name="Online Ordering" parent="online_ordering_root" action="online_ordering_action"/>
+</odoo>

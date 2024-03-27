@@ -1,0 +1,621 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="new_merchant_form" name="new merchant form">
+        <t t-call="website.layout">
+            <div id="wrap">
+                <div class="container website_application">
+                    <div class="col-md-12">
+<!--                        <form action="/application_ach_authorization/submit" enctype="multipart/form-data" method = "POST">-->
+                            <style>
+                                #loading {
+                                  position: fixed;
+                                  display: flex;
+                                  justify-content: center;
+                                  align-items: center;
+                                  width: 100%;
+                                  height: 100%;
+                                  top: 0;
+                                  left: 0;
+                                  opacity: 0.7;
+                                  background-color: #fff;
+                                  z-index: 99;
+                                }
+
+                                #loading-image {
+                                  z-index: 100;
+                                }
+                            </style>
+                            <div id="loading" hidden="">
+                              <img id="loading-image" src="/website_application/static/images/200w.gif" alt="Loading..." />
+                            </div>
+                            <p style="text-align: center;"><span style="font-size: 25pt;"><strong><span style="color: #000000;">New Merchant Application</span></strong></span></p>
+                            <form id="new_merchant_form" name="new_merchant_form" action="" method="post" class="was-validated">
+                            <t t-if="new_merchant_from and new_merchant_from['if_hidden_for_merchant']">
+                                <t t-set="style" t-value="'visibility: hidden;display:none;'" />
+                            </t>
+                            <div id="hidden_for_merchant"  t-att-style="style" >
+
+                                <h4>Agent Fill In - Hidden For Merchant</h4>
+
+                                <br></br>
+    <!--                            <div class="row" >-->
+    <!--                                <div class="form-group col-md-6">-->
+    <!--                                <label >Account Information*:</label><br></br>-->
+    <!--                                    <input type="radio" id="account_type1"  name="account_type" value="1" t-att-checked="'checked' if new_merchant_from and new_merchant_from['account_type'] == '1' else None"/>New Account-->
+    <!--                                <br/>-->
+    <!--                                    <input type="radio" id="account_type2" name="account_type" value="2" t-att-checked="'checked' if new_merchant_from and new_merchant_from['account_type'] == '2' else None"/>Change Owner-->
+    <!--                                <br/>-->
+    <!--                                    <input type="radio" id="account_type3" name="account_type" value="3" t-att-checked="'checked' if new_merchant_from and new_merchant_from['account_type'] == '3' else None"/>Change Legal Info-->
+    <!--                                <br/>-->
+    <!--                                </div>-->
+    <!--                            </div>-->
+                                <label >Account Information*:</label>
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" required="" id="account_type1" class="custom-control-input" name="account_type" value="1" t-att-checked="'checked' if new_merchant_from and new_merchant_from['account_type'] == '1' else None"/>
+                                    <label class="custom-control-label" for="account_type1">New Account</label>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" required="" id="account_type2" class="custom-control-input" name="account_type" value="2" t-att-checked="'checked' if new_merchant_from and new_merchant_from['account_type'] == '2' else None"/>
+                                    <label class="custom-control-label" for="account_type2">Change Owner</label>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" required="" id="account_type3" class="custom-control-input" name="account_type" value="3" t-att-checked="'checked' if new_merchant_from and new_merchant_from['account_type'] == '3' else None"/>
+                                    <label class="custom-control-label" for="account_type3">Change Legal Info</label>
+                                </div>
+
+                                <div class="form-group" id="div_account_type" hidden="hidden" >
+                                    <label >Old Mid :</label>
+                                    <input type="number" class="form-control" name="old_mid" id="old_mid" t-att-value="new_merchant_from['old_mid'] if new_merchant_from and new_merchant_from['old_mid'] else None"/>
+                                    <div class="invalid-feedback">Please fill out this field in correct format.</div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-md-6">
+                                        <label >Add Paper Plan ($14.95 / Month):</label><br></br>
+                                        <input type="radio" id="is_add_paper_plan1" name="is_add_paper_plan" value="1" t-att-checked="'checked' if new_merchant_from and new_merchant_from['is_add_paper_plan'] == '1' else None"/>
+                                        Yes<br/>
+                                        <input type="radio" id="is_add_paper_plan2" name="is_add_paper_plan" value="2" t-att-checked="'checked' if new_merchant_from and new_merchant_from['is_add_paper_plan'] == '2' else None"/>
+                                        No<br/>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-md-6">
+                                        <label >Add Supply Order:</label><br></br>
+                                        <input type="checkbox" id="checkbook" name="checkbook" value="1" t-att-checked="'checked' if new_merchant_from and new_merchant_from['checkbook'] == 'true' else None"/>
+                                        Checkbooks<br/>
+                                        <input type="checkbox" id="tips_trays" name="tips_trays" value="2" t-att-checked="'checked' if new_merchant_from and new_merchant_from['tips_trays'] == 'true' else None"/>
+                                        Tips Trays<br/>
+                                        <input type="checkbox" id="no_supply_order_needed" name="no_supply_order_needed" value="3" t-att-checked="'checked' if new_merchant_from and new_merchant_from['no_supply_order_needed'] == 'true' else None"/>
+                                        No Supply Order Needed<br/>
+                                    </div>
+                                </div>
+
+    <!--                            <div class="row">-->
+    <!--                                <span class="form-group col-md-6" >-->
+    <!--                                    <label >Standalone OR Semi-Integration *</label><br></br>-->
+    <!--                                    <input type="radio" name="standalone_or_semi" value="1" t-att-checked="'checked' if new_merchant_from and new_merchant_from['standalone_or_semi'] == '1' else None"/>-->
+    <!--                                    Standalone<br/>-->
+    <!--                                    <input type="radio" name="standalone_or_semi" value="2" t-att-checked="'checked' if new_merchant_from and new_merchant_from['standalone_or_semi'] == '2' else None"/>-->
+    <!--                                    Semi-Integration<br/>-->
+    <!--                                </span>-->
+    <!--                            </div>-->
+                                <label >Standalone OR Semi-Integration *</label>
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" required="" class="custom-control-input" id="standalone_or_semi1" name="standalone_or_semi" value="1" t-att-checked="'checked' if new_merchant_from and new_merchant_from['standalone_or_semi'] == '1' else None"/>
+                                    <label class="custom-control-label" for="standalone_or_semi1">Standalone</label>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" required="" class="custom-control-input" id="standalone_or_semi2" name="standalone_or_semi" value="2" t-att-checked="'checked' if new_merchant_from and new_merchant_from['standalone_or_semi'] == '2' else None"/>
+                                    <label class="custom-control-label" for="standalone_or_semi2">Semi-Integration</label>
+                                </div>
+                                <div class="form-group" id="div_specify_your_equipment_type" hidden="hidden">
+                                        <label for="name">Specify your equipment type:</label>
+                                        <input type="text" class="form-control" name="equipment_type" id="equipment_type" t-att-value="new_merchant_from['equipment_type'] if new_merchant_from and new_merchant_from['equipment_type'] else None"/>
+                                </div>
+                                <div name='div_standalone_or_semi' id="div_standalone_or_semi" >
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label for="name">Equipment:</label><br></br>
+                                            <select name="equipment" id="equipment">
+                                                <option value="1" t-att-selected="'selected' if new_merchant_from  and new_merchant_from['equipment'] == '1' else None">PAX S80</option>
+                                                <option value="2" t-att-selected="'selected' if new_merchant_from  and new_merchant_from['equipment'] == '2' else None">PAX S300</option>
+                                                <option value="3" t-att-selected="'selected' if new_merchant_from  and new_merchant_from['equipment'] == '3' else None">PAX S500</option>
+                                                <option value="4" t-att-selected="'selected' if new_merchant_from  and new_merchant_from['equipment'] == '4' else None">FD 50</option>
+                                                <option value="5" t-att-selected="'selected' if new_merchant_from  and new_merchant_from['equipment'] == '5' else None">Clover</option>
+                                                <option value="6" t-att-selected="'selected' if new_merchant_from  and new_merchant_from['equipment'] == '6' else None">other</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <label >Bill to? *</label>
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" required="" class="custom-control-input" id="bill_to1" name="bill_to" value="1" t-att-checked="'checked' if new_merchant_from and new_merchant_from['bill_to'] == '1' else None"/>
+                                                <label class="custom-control-label" for="bill_to1">Agent</label>
+                                            </div>
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" required="" class="custom-control-input" id="bill_to2" name="bill_to" value="1" t-att-checked="'checked' if new_merchant_from and new_merchant_from['bill_to'] == '2' else None"/>
+                                                <label class="custom-control-label" for="bill_to2">Merchant</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                            <label >Equipment Quantity :</label>
+                                            <input type="number" class="form-control" name="equipment_quantity" id="equipment_quantity" t-att-value="new_merchant_from['equipment_quantity'] if new_merchant_from and new_merchant_from['equipment_quantity'] else None" />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label >Features:</label><br></br>
+                                        <input type="checkbox" id="feature_restaurant" name="feature" value="1" t-att-checked="'checked' if new_merchant_from and new_merchant_from['feature_restaurant'] == 'Yes' else None"/>
+                                        Restaurant<br/>
+                                        <input type="checkbox" id="feature_retail" name="feature" value="2" t-att-checked="'checked' if new_merchant_from and new_merchant_from['feature_retail'] == 'Yes' else None"/>
+                                         Retail<br/>
+                                        <input type="checkbox" id="feature_with_tips" name="feature" value="3" t-att-checked="'checked' if new_merchant_from and new_merchant_from['feature_with_tips'] == 'Yes' else None"/>
+                                        with Tips<br/>
+                                        <input type="checkbox" id="feature_dial" name="feature" value="4" t-att-checked="'checked' if new_merchant_from and new_merchant_from['feature_dial'] == 'Yes' else None"/>
+                                         Dial<br/>
+                                        <input type="checkbox" id="feature_pin_debit" name="feature" value="5" t-att-checked="'checked' if new_merchant_from and new_merchant_from['feature_pin_debit'] == 'Yes' else None"/>
+                                         Pin-Debit<br/>
+                                        <input type="checkbox" id="feature_server_id" name="feature" value="6" t-att-checked="'checked' if new_merchant_from and new_merchant_from['feature_server_id'] == 'Yes' else None"/>
+                                         Server ID<br/>
+                                        <input type="checkbox" id="feature_ip" name="feature" value="7" t-att-checked="'checked' if new_merchant_from and new_merchant_from['feature_ip'] == 'Yes' else None"/>
+                                         IP                <input type="text" id="feature_ip_input" name="feature" hidden="display: none;" placeholder="IP Address" t-att-value="new_merchant_from['feature_ip_input'] if new_merchant_from and new_merchant_from['feature_ip_input'] else None"/><br/>
+                                        <input type="checkbox" id="feature_auto_time_batch" name="feature" value="8" t-att-checked="'checked' if new_merchant_from and new_merchant_from['feature_auto_time_batch'] == 'Yes' else None"/>
+                                         Auto Batch       <input type="text" id="feature_auto_batch_time_input" name="feature" style="display: none;" placeholder="Auto Batch" t-att-value="new_merchant_from['feature_auto_batch_time_input'] if new_merchant_from and new_merchant_from['feature_auto_batch_time_input'] else None"/><br/>
+                                        <input type="checkbox" id="feature_tip_suggestions" name="feature" value="9" t-att-checked="'checked' if new_merchant_from and new_merchant_from['feature_tip_suggestions'] == 'Yes' else None"/>
+                                         Tip Suggestions  <input type="text" id="feature_tip_suggestions_input" name="feature" style="display: none;" placeholder="Tip Suggestion" t-att-value="new_merchant_from['feature_tip_suggestions_input'] if new_merchant_from and new_merchant_from['feature_tip_suggestions_input'] else None"/><br/>
+                                        <input type="checkbox" id="feature_other_feature" name="feature" value="10" t-att-checked="'checked' if new_merchant_from and new_merchant_from['feature_other_feature'] == 'Yes' else None"/>
+                                         Other             <input type="text" id="feature_other_feature_input" name="feature" style="display: none;" placeholder="Other Feature" t-att-value="new_merchant_from['feature_other_feature_input'] if new_merchant_from and new_merchant_from['feature_other_feature_input'] else None"/>
+                                    </div>
+                                </div>
+
+                                <label >Deployment Method *</label>
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" required="" class="custom-control-input" id="deployment_method1" name="deployment_method" value="1" t-att-checked="'checked' if new_merchant_from and new_merchant_from['deployment_method'] == '1' else None"/>
+                                    <label class="custom-control-label" for="deployment_method1">Agent Pickup</label>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" required="" class="custom-control-input" id="deployment_method2" name="deployment_method" value="2" t-att-checked="'checked' if new_merchant_from and new_merchant_from['deployment_method'] == '2' else None"/>
+                                    <label class="custom-control-label" for="deployment_method2">Call Merchant Pickup</label>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" required="" class="custom-control-input" id="deployment_method3" name="deployment_method" value="3" t-att-checked="'checked' if new_merchant_from and new_merchant_from['deployment_method'] == '3' else None"/>
+                                    <label class="custom-control-label" for="deployment_method3">POS Team Install</label>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" required="" class="custom-control-input" id="deployment_method4" name="deployment_method" value="4" t-att-checked="'checked' if new_merchant_from and new_merchant_from['deployment_method'] == '4' else None"/>
+                                    <label class="custom-control-label" for="deployment_method4">Ship To DBA Address</label>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" required="" class="custom-control-input" id="deployment_method5" name="deployment_method" value="5" t-att-checked="'checked' if new_merchant_from and new_merchant_from['deployment_method'] == '5' else None"/>
+                                    <label class="custom-control-label" for="deployment_method5">Ship To Other Address</label>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" required="" class="custom-control-input" id="deployment_method6" name="deployment_method" value="6" t-att-checked="'checked' if new_merchant_from and new_merchant_from['deployment_method'] == '6' else None"/>
+                                    <label class="custom-control-label" for="deployment_method6">Re-Programming</label>
+                                </div>
+
+                                <div id="div_deployment_method_ship_to" hidden="hidden">
+                                    <div class="form-group">
+                                        <label >Ship with POS :</label><br></br>
+                                         <input type="radio"  name="is_ship_with_pos" value="1" t-att-checked="'checked' if new_merchant_from and new_merchant_from['is_ship_with_pos'] == '1' else None"/>
+                                        Yes<br/>
+                                        <input type="radio" name="is_ship_with_pos" value="2" t-att-checked="'checked' if new_merchant_from and new_merchant_from['is_ship_with_pos'] == '2' else None"/>
+                                         No
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label >Ship Out Address</label>
+                                            <input type="text" class="form-control" id="ship_out_address" t-att-value="new_merchant_from['ship_out_address'] if new_merchant_from and new_merchant_from['ship_out_address'] else None" />
+                                            <div class="invalid-feedback">Please fill out this field in correct format.</div>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label >Ship Out City</label>
+                                            <input type="text" class="form-control" id="ship_out_city" t-att-value="new_merchant_from['ship_out_city'] if new_merchant_from and new_merchant_from['ship_out_city'] else None" />
+                                            <div class="invalid-feedback">Please fill out this field in correct format.</div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label >Ship Out Zip Code</label>
+                                            <input type="number" class="form-control" min="10000" max="99999" id="ship_out_zip"  t-att-value="new_merchant_from['ship_out_zip'] if new_merchant_from and new_merchant_from['ship_out_city'] else None"/>
+                                            <div class="invalid-feedback">Please fill out this field in correct format.</div>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label >Ship Out State</label>
+                                            <input type="text" class="form-control" id="ship_out_state" t-att-value="new_merchant_from['ship_out_state'] if new_merchant_from and new_merchant_from['ship_out_city'] else None"/>
+                                            <div class="invalid-feedback">Please fill out this field in correct format.</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group" hidden="hidden" id="div_reprogram_old_mid">
+                                        <label >Reprogram Old MID: </label>
+                                        <input type="number" class="form-control" name="reprogram_old_mid" id="reprogram_old_mid" t-att-value="new_merchant_from['reprogram_old_mid'] if new_merchant_from and new_merchant_from['reprogram_old_mid'] else None"/>
+                                        <div class="invalid-feedback">Please fill out this field in correct way.</div>
+                                    </div>
+    <!--                            <div class="form-group">-->
+    <!--                                <label >Pricing Type*</label><br></br>-->
+    <!--                                 <input type="radio"  name="pricing_type" value="1" t-att-checked="'checked' if new_merchant_from and new_merchant_from['pricing_type'] == '1' else None"/>-->
+    <!--                                Interchange<br/>-->
+    <!--                                <input type="radio" name="pricing_type" value="2" t-att-checked="'checked' if new_merchant_from and new_merchant_from['pricing_type'] == '2' else None"/>-->
+    <!--                                 Flat Rate<br/>-->
+    <!--                                <input type="radio" name="pricing_type" value="3" t-att-checked="'checked' if new_merchant_from and new_merchant_from['pricing_type'] == '3' else None"/>-->
+    <!--                                 Cash Discount (by Percentage %)<br/>-->
+    <!--                                <input type="radio" name="pricing_type" value="4" t-att-checked="'checked' if new_merchant_from and new_merchant_from['pricing_type'] == '4' else None"/>-->
+    <!--                                 Cash Discount (by Flat Fee $))<br/>-->
+    <!--                            </div>-->
+                                <label >Pricing Type*</label>
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" required="" id="pricing_type1" class="custom-control-input" name="pricing_type" value="1" t-att-checked="'checked' if new_merchant_from and new_merchant_from['pricing_type'] == '1' else None"/>
+                                    <label class="custom-control-label" for="pricing_type1">Interchange</label>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" required="" id="pricing_type2" class="custom-control-input" name="pricing_type" value="2" t-att-checked="'checked' if new_merchant_from and new_merchant_from['pricing_type'] == '2' else None"/>
+                                    <label class="custom-control-label" for="pricing_type2">Flat Rate</label>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" required="" id="pricing_type3" class="custom-control-input" name="pricing_type" value="3" t-att-checked="'checked' if new_merchant_from and new_merchant_from['pricing_type'] == '3' else None"/>
+                                    <label class="custom-control-label" for="pricing_type3">Cash Discount (by Percentage %)</label>
+                                </div>
+                                    <div class="custom-control custom-radio">
+                                    <input type="radio" required="" id="pricing_type4" class="custom-control-input" name="pricing_type" value="4" t-att-checked="'checked' if new_merchant_from and new_merchant_from['pricing_type'] == '4' else None"/>
+                                    <label class="custom-control-label" for="pricing_type4">Cash Discount (by Flat Fee $))</label>
+                                </div>
+
+                                <div id="div_pricing_type_1_2" hidden="hidden">
+
+                                    <div class="form-group ">
+                                        <label >VISA/MC/DISCOVER Sales Discount Fee(_.__%) :</label>
+                                        <input type="text" class="form-control" name="visa_sales_discount_fee" id="visa_sales_discount_fee" t-att-value="new_merchant_from['visa_sales_discount_fee'] if new_merchant_from and new_merchant_from['ship_out_city'] else '0.00%'"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label >VISA/MC/DISCOVER Auth Fee($_.___) :</label>
+                                        <input type="text" class="form-control" name="visa_auth_fee" id="visa_auth_fee" t-att-value="new_merchant_from['visa_auth_fee'] if new_merchant_from and new_merchant_from['visa_auth_fee'] else '$0.000'"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label >AMEX Sales Discount Fee(_.__%) :</label>
+                                        <input type="text" class="form-control" name="amex_sales_discount_fee" id="amex_sales_discount_fee"  t-att-value="new_merchant_from['amex_sales_discount_fee'] if new_merchant_from and new_merchant_from['amex_sales_discount_fee'] else '0.00%'"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label >AMEX Auth Fee ($_.__):</label>
+                                        <input type="text" class="form-control" name="amex_auth_fee" id="amex_auth_fee" t-att-value="new_merchant_from['amex_auth_fee'] if new_merchant_from and new_merchant_from['amex_auth_fee'] else '$0.00'"/>
+                                    </div>
+                                </div>
+                                <div id="div_pricing_type_3_4" hidden="hidden">
+                                    <div class="form-group">
+                                        <label >Cash Discount Rate</label>
+                                        <input type="text" class="form-control" name="cash_discount_rate" id="cash_discount_rate" t-att-value="new_merchant_from['cash_discount_rate'] if new_merchant_from and new_merchant_from['cash_discount_rate'] else None"/>
+                                    </div>
+                                    <div class="form-group ">
+                                        <label>Do you want Free Cash Discount Pricing List/Menu (For Massage ONLY)?</label><br/>
+                                        <input type="radio"  name="if_want_free_cash_discount" id="if_want_free_cash_discount" value="1" t-att-checked="'checked' if new_merchant_from and new_merchant_from['if_want_free_cash_discount'] == '1' else None"/>
+                                         Yes<br/>
+                                        <input type="radio"  name="if_want_free_cash_discount" id="if_want_free_cash_discount" value="2" t-att-checked="'checked' if new_merchant_from and new_merchant_from['if_want_free_cash_discount'] == '2' else None"/>
+                                         No<br/>
+                                    </div>
+
+                                </div>
+                                <div class="form-group" id="div_if_want_free_cash_discount" hidden="hidden">
+                                        <label class="col-form-label" >Menu/Price List Upload</label>
+                                        <input type="file" name="menu_document"  class="form-control"/>
+                                </div>
+
+                                <div class="form-group">
+                                        <label >Monthly Fee ($):</label>
+                                        <input type="number" class="form-control" name="monthly_fee" id="monthly_fee" t-att-value="new_merchant_from['monthly_fee'] if new_merchant_from and new_merchant_from['monthly_fee'] else '25'" />
+                                    </div>
+                                <div class="row">
+                                    <div class="form-group col-md-6">
+                                        <label >Other Comment:</label>
+                                        <input type="text" class="form-control" name="other_comment" id="other_comment" t-att-value="new_merchant_from['other_comment'] if new_merchant_from and new_merchant_from['other_comment'] else None"/>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label >Date :</label>
+                                        <input type="date" class="form-control" name="date" id="date"  t-att-value="new_merchant_from['date'] if new_merchant_from and new_merchant_from['date'] else None"/>
+                                    </div>
+                                </div>
+
+
+    <!--                            <div class="form-group ">-->
+    <!--                                <label>**Please check the information on this page. By selecting all checkboxes below, the pricing info will be hidden.*</label><br/>-->
+    <!--                                <input type="checkbox"  name="agreement"  value="1" id="completely_fill"/>-->
+    <!--                                 I have completely filled out the Account, Equipment, and Pricing Information Sections of the form.<br/>-->
+    <!--                                <input type="checkbox"  name="agreement" value="2" id="verify_information"/>-->
+    <!--                                 I have verified that the information filled out in the sections stated above are filled out correctly.<br/>-->
+    <!--                            </div>-->
+                                <label>**Please check the information on this page. By selecting all checkboxes below, the pricing info will be hidden.*</label>
+                                <div class="custom-control custom-checkbox ">
+                                    <input type="checkbox" name="agreement" class="custom-control-input" id="completely_fill" value="1" required="" t-att-checked="'checked' if new_merchant_from and new_merchant_from['completely_fill'] else None"/>
+                                    <label class="custom-control-label" for="completely_fill">I have completely filled out the Account, Equipment, and Pricing Information Sections of the form.</label>
+                                </div>
+                                <div class="custom-control custom-checkbox ">
+                                    <input type="checkbox" name="agreement" class="custom-control-input" id="verify_information" value="2" required="" t-att-checked="'checked' if new_merchant_from and new_merchant_from['verify_information']  else None"/>
+                                    <label class="custom-control-label" for="verify_information">I have verified that the information filled out in the sections stated above are filled out correctly.</label>
+                                </div>
+                            </div>
+
+
+                            <h4>Business Information</h4>
+                            <br></br>
+                            <div class="row">
+                                     <div class="form-group col-md-4">
+                                        <label for="agent_name">Your Sales Agent (销售名字) *</label>
+                                        <input type="text" class="form-control" name="agent_name" id="agent_name" required="true" t-att-value="new_merchant_from['agent_name'] if new_merchant_from and new_merchant_from['agent_name'] else None"/>
+                                     </div>
+                                     <div class="form-group col-md-4">
+                                        <label for="agent_email">Agent Email (销售邮箱) *</label>
+                                        <input type="email" class="form-control" name="agent_email" id="agent_email" required="true" t-att-value="new_merchant_from['agent_email'] if new_merchant_from and new_merchant_from['agent_email'] else None"/>
+                                         <div class="invalid-feedback">Please fill out this field in correct format.</div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="name_of_company">Legal Name of Business (公司名字) *</label>
+                                         <input type="text" class="form-control" name="name_of_company" id="name_of_company" required="true" t-att-value="new_merchant_from['name_of_company'] if new_merchant_from and new_merchant_from['name_of_company'] else None"/>
+                                    </div>
+                            </div>
+                            <div class="row">
+                                     <div class="form-group col-md-6">
+                                        <label for="name">Doing Business As (招牌名字) *</label>
+                                        <input type="text" class="form-control" name="dba" id="dba" required="true" t-att-value="new_merchant_from['dba'] if new_merchant_from and new_merchant_from['dba'] else None"/>
+                                     </div>
+                                     <div class="form-group col-md-6">
+                                        <label for="address">Address (店铺地址) *</label>
+                                        <input type="text" class="form-control" name="address" id="address" required="true"  t-att-value="new_merchant_from['address'] if new_merchant_from and new_merchant_from['address'] else None"/>
+                                    </div>
+
+                            </div>
+                            <div class="row">
+                                     <div class="form-group col-md-4">
+                                        <label for="agent_city">City (城市) *</label>
+                                        <input type="text" class="form-control" name="city" id="city" required="true" t-att-value="new_merchant_from['city'] if new_merchant_from and new_merchant_from['city'] else None"/>
+                                     </div>
+                                     <div class="form-group col-md-4">
+                                        <label for="agent_state">State(州) *</label>
+                                        <input type="text" class="form-control" name="state" id="state" required="true" t-att-value="new_merchant_from['state'] if new_merchant_from and new_merchant_from['state'] else None"/>
+                                     </div>
+                                     <div class="form-group col-md-4">
+                                        <label for="agent_zip_code">Zip Code (邮政编码) *</label>
+                                        <input type="number" class="form-control" name="zip_code" id="zip_code" min="10000" max="99999" required="true" t-att-value="new_merchant_from['zip_code'] if new_merchant_from and new_merchant_from['zip_code'] else None"/>
+                                         <div class="invalid-feedback">Please fill out this field in correct format.</div>
+                                    </div>
+                            </div>
+                            <div class="row">
+                                     <div class="form-group col-md-3">
+                                        <label for="business_phone">Business Phone Number (电话) *</label>
+                                        <input type="number" min="1000000000" max="9999999999" class="form-control" name="business_phone_number" id="business_phone_number" required="true" t-att-value="new_merchant_from['business_phone_number'] if new_merchant_from and new_merchant_from['business_phone_number'] else None"/>
+                                         <div class="invalid-feedback">Please fill out this field in correct format.</div>
+                                     </div>
+                                     <div class="form-group col-md-3">
+                                        <label for="fax_number">Fax Number (传真)*</label>
+                                        <input type="text" class="form-control" name="fax_number" id="fax_number" t-att-value="new_merchant_from['fax_number'] if new_merchant_from and new_merchant_from['fax_number'] else None"/>
+                                     </div>
+                                     <div class="form-group col-md-3">
+                                        <label for="federal_tax_id">Federal Tax ID # (联邦报税号码) *</label>
+                                        <input type="text" class="form-control" name="federal_tax_id" id="federal_tax_id" required="true" t-att-value="new_merchant_from['federal_tax_id'] if new_merchant_from and new_merchant_from['federal_tax_id'] else None"/>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label for="type_of_business">Type of Business (哪一种生意) *</label>
+                                        <input type="text" class="form-control" name="type_of_business" id="type_of_business" required="true" t-att-value="new_merchant_from['type_of_business'] if new_merchant_from and new_merchant_from['type_of_business'] else None"/>
+                                    </div>
+                            </div>
+                            <div >
+                                <div class="form-group">
+                                    <label for="name">Company Type:</label><br></br>
+                                    <input type="radio"  name="company_type" value="1" t-att-checked="'checked' if new_merchant_from and new_merchant_from['company_type'] == '1' else None"/>
+                                    Sole Proprietorship (独资)<br/>
+                                    <input type="radio"  name="company_type" value="2" t-att-checked="'checked' if new_merchant_from and new_merchant_from['company_type'] == '2' else None"/>
+                                    Private Corp. (公司)<br/>
+                                    <input type="radio"  name="company_type" value="3" t-att-checked="'checked' if new_merchant_from and new_merchant_from['company_type'] == '3' else None"/>
+                                    Limited Liability Co. (公司)<br/>
+                                    <input type="radio"  name="company_type" value="4" t-att-checked="'checked' if new_merchant_from and new_merchant_from['company_type'] == '4' else None"/>
+                                    Partnership (合伙)<br/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="open_date">Business Open Date (公司开始日期) *</label>
+                                <input type="date" class="form-control" name="open_date" id="open_date" required="true" t-att-value="new_merchant_from['open_date'] if new_merchant_from and new_merchant_from['open_date'] else None"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="estimated_monthly_sale_volume">Estimated Monthly Sale Volume (预估月刷卡量) *</label>
+                                <input type="number" class="form-control" placeholder="1000" name="estimated_monthly_sale_volume" id="estimated_monthly_sale_volume" required="true" t-att-value="new_merchant_from['estimated_monthly_sale_volume'] if new_merchant_from and new_merchant_from['estimated_monthly_sale_volume'] else None"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="average_sales_account">Average Sales Amount (平均每笔刷卡金额) *</label>
+                                <input type="number" class="form-control" placeholder="25"  name="average_sales_account" id="average_sales_account" required="true" t-att-value="new_merchant_from['average_sales_account'] if new_merchant_from and new_merchant_from['average_sales_account'] else None"/>
+                            </div>
+
+                            <span class="form-group ">
+                                <label for="name">Amex *</label><br></br>
+                                <input type="radio"  name="amex" value="1" t-att-checked="'checked' if new_merchant_from and new_merchant_from['amex'] == '1' else None"/>
+                                Yes<br/>
+                                <input type="radio"  name="amex" value="2" t-att-checked="'checked' if new_merchant_from and new_merchant_from['amex'] == '2' else None"/>
+                                No<br/>
+                            </span>
+                                <br></br>
+                                <h4>Principle Information</h4>
+                                <br></br>
+                            <div class="row">
+                                 <div class="form-group col-md-3">
+                                    <label for="owner_name">Owner's Name (老板姓名) *</label>
+                                    <input type="text" class="form-control" name="owner_name" id="owner_name" required="true" t-att-value="new_merchant_from['owner_name'] if new_merchant_from and new_merchant_from['owner_name'] else None"/>
+                                 </div>
+                                 <div class="form-group col-md-3">
+                                    <label for="owner_email">Email (邮箱) *</label>
+                                    <input type="email" class="form-control" name="owner_email" id="owner_email" required="true" t-att-value="new_merchant_from['owner_email'] if new_merchant_from and new_merchant_from['owner_email'] else None"/>
+                                     <div class="invalid-feedback">Please fill out this field in correct format.</div>
+                                 </div>
+                                 <div class="form-group col-md-3">
+                                    <label for="owner_title">Tittle (头衔) *</label>
+                                    <input type="text" class="form-control" name="owner_title" id="owner_title" required="true" t-att-value="new_merchant_from['owner_title'] if new_merchant_from and new_merchant_from['owner_title'] else None"/>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label for="owner_phone_number">Cell Phone Number (手机) *</label>
+                                    <input type="number" class="form-control" min="1000000000" max="9999999999" name="owner_phone_number" id="owner_phone_number" required="true" t-att-value="new_merchant_from['owner_phone_number'] if new_merchant_from and new_merchant_from['owner_phone_number'] else None"/>
+                                    <div class="invalid-feedback">Please fill out this field in correct format.</div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                 <div class="form-group col-md-3">
+                                    <label for="owner_home_address">Home Address (住家地址) *</label>
+                                    <input type="text" class="form-control" name="owner_home_address" id="owner_home_address" required="true" t-att-value="new_merchant_from['owner_home_address'] if new_merchant_from and new_merchant_from['owner_home_address'] else None"/>
+                                 </div>
+                                 <div class="form-group col-md-3">
+                                    <label for="owner_home_city">Home City (城市) *</label>
+                                    <input type="text" class="form-control" name="owner_home_city" id="owner_home_city" required="true" t-att-value="new_merchant_from['owner_home_city'] if new_merchant_from and new_merchant_from['owner_home_city'] else None"/>
+                                 </div>
+                                 <div class="form-group col-md-3"> `
+                                    <label for="owner_home_state">Home State (州) *</label>
+                                    <input type="text" class="form-control" name="owner_home_state" id="owner_home_state" required="true" t-att-value="new_merchant_from['owner_home_state'] if new_merchant_from and new_merchant_from['owner_home_state'] else None"/>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label for="owner_home_zip_code">Home Zip Code (邮政编号) *</label>
+                                    <input type="number" class="form-control" min="10000" max="99999"  name="owner_home_zip_code" id="owner_home_zip_code" required="true" t-att-value="new_merchant_from['owner_home_zip_code'] if new_merchant_from and new_merchant_from['owner_home_zip_code'] else None"/>
+                                     <div class="invalid-feedback">Please fill out this field in correct format.</div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                     <div class="form-group col-md-3">
+                                        <label for="ssn">Social Security Number (社安) *</label>
+                                        <input type="number" class="form-control" name="ssn" min="100000000" max="999999999"  id="ssn" required="true" t-att-value="new_merchant_from['ssn'] if new_merchant_from and new_merchant_from['ssn'] else None"/>
+                                         <div class="invalid-feedback">Please fill out this field in correct format.</div>
+                                     </div>
+                                     <div class="form-group col-md-3">
+                                        <label for="owner_date_of_birth">Date of Birth (出生日期) *</label>
+                                        <input type="date" class="form-control" name="owner_date_of_birth" id="owner_date_of_birth" required="true" t-att-value="new_merchant_from['owner_date_of_birth'] if new_merchant_from and new_merchant_from['owner_date_of_birth'] else None"/>
+                                     </div>
+                                     <div class="form-group col-md-3">
+                                        <label for="owner_driver_license_number">Driver License Number (驾照) *</label>
+                                        <input type="text" class="form-control" name="owner_driver_license_number" id="owner_driver_license_number" required="true" t-att-value="new_merchant_from['owner_driver_license_number'] if new_merchant_from and new_merchant_from['owner_driver_license_number'] else None"/>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label for="owner_state_issued">State Issued (驾照所在州) *</label>
+                                        <input type="text" class="form-control" name="owner_state_issued" id="owner_state_issued" required="true" t-att-value="new_merchant_from['owner_state_issued'] if new_merchant_from and new_merchant_from['owner_state_issued'] else None"/>
+                                    </div>
+                            </div>
+                            <div class="row">
+                                     <div class="form-group col-md-4">
+                                        <label for="owner_bank_name">Bank Name *</label>
+                                        <input type="text" class="form-control" name="owner_bank_name" id="owner_bank_name" required="true" t-att-value="new_merchant_from['owner_bank_name'] if new_merchant_from and new_merchant_from['owner_bank_name'] else None"/>
+                                     </div>
+                                     <div class="form-group col-md-4">
+                                        <label for="owner_bank_routing">Bank Routing # *</label>
+                                        <input type="number" class="form-control" name="owner_bank_routing" id="owner_bank_routing" min="100000000" max="999999999" required="true" t-att-value="new_merchant_from['owner_bank_routing'] if new_merchant_from and new_merchant_from['owner_bank_routing'] else None"/>
+                                         <div class="invalid-feedback">Please fill out this field in correct format.</div>
+                                     </div>
+                                     <div class="form-group col-md-4">
+                                        <label for="owner_bank_account">Bank Account # *</label>
+                                        <input type="number" class="form-control" name="owner_bank_account"  id="owner_bank_account" required="true" t-att-value="new_merchant_from['owner_bank_account'] if new_merchant_from and new_merchant_from['owner_bank_account'] else None"/>
+                                         <div class="invalid-feedback">Please fill out this field in correct format.</div>
+                                    </div>
+                            </div>
+                                <br></br>
+                                <h4>Attachment Required</h4>
+                                <br></br>
+                            <div class="form-group">
+                                <label class="col-form-label" >Voided Check (支票) *</label>
+                                <input type="file" name="void_check_document" id="void_check_document"  class="form-control"/>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-form-label" >Owner's ID (证件) *</label>
+                                <input type="file" name="owner_id_document" id="owner_id_document"  class="form-control"/>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-form-label" >IRS Document (联邦税号文件)</label>
+                                <input type="file" name="irs_document" id="irs_document"  class="form-control"/>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-form-label" >Other Documents</label>
+                                <input type="file" name="other_document"  id="other_document" class="form-control"/>
+                            </div>
+                            <p style="text-align: center;"><span style="font-size: 14pt;"><strong><span style="color: #000000;">AGREEMENT APPROVAL</span></strong></span></p>
+<p><strong><span style="color: #000000;">Merchant Acceptance</span></strong><span style="color: #000000;"> Each person signing below agrees to the terms and conditions stated in the front and back of this agreement and certifies</span> <span style="color: #000000;">that all information provided in the application is true, correct and complete. Client acknowledges and agrees that we, our Affiliates and our third</span> <span style="color: #000000;">party subcontractors and/or agents may use automatic telephone dialing systems to contact Client at the telephone number(s) Client has provided</span> <span style="color: #000000;">in this Merchant Processing Application and Agreement and/or may leave a detailed voice message in the event that Client is unable to be reached,</span> <span style="color: #000000;">even if the number provided is a cellular or wireless number or if Client has previously registered on a Do Not Call list or requested not to be</span> <span style="color: #000000;">contacted by Client for solicitation purposes. Client hereby consents to receiving commercial electronic mail messages from us, our Affiliates and</span> <span style="color: #000000;">our third party subcontractors and/or agents from time to time. Each signer authorizes CardConnect and/or the Member Bank or any agent of the</span> <span style="color: #000000;">Member Bank, to make whatever inquiries CardConnect and/or the Member Bank deem appropriate to investigate, verify, or research references,</span> <span style="color: #000000;">statements or data, including personal credit reports for the purpose of this application. Merchant understands this agreement shall not take effect</span> <span style="color: #000000;">until Merchant has been approved by CardConnect and/or the Member Bank and a merchant number is issued.</span></p>
+<p><span style="color: #000000;">You further acknowledge and agree that you will not use your merchant account and/or the Services for illegal transactions, for example, those</span> <span style="color: #000000;">prohibited by the Unlawful Internet Gambling Enforcement Act, 31 U.S.C. Section 5361 et seq, as may be amended from time to time, or processing</span> <span style="color: #000000;">and acceptance of transactions in certain jurisdictions pursuant to 31 CFR Part 500 et seq. and other laws enforced by the Office of Foreign Assets</span> <span style="color: #000000;">Control (OFAC).</span></p>
+<p><strong> <span style="color: #000000;">Client certifies, under penalties of perjury, that the federal taxpayer identification number and corresponding filing name</span> <span style="color: #000000;">provided herein are correct.</span></strong></p>
+
+
+                            <div class="form-group">
+                                <label >Signature*:</label><br/>
+                                <div class='signature'></div>
+                                <button id="signature_clear"  >Clear</button>
+                            </div>
+                            <div class="form-group">
+                                <label for="sign_date">Sign Date*:</label>
+                                <input type="date" class="form-control" name="sign_date" id="sign_date" required="true" t-att-value="new_merchant_from['sign_date'] if new_merchant_from and new_merchant_from['sign_date'] else None"/>
+                            </div>
+                            <p><span style="font-weight: bold; color: #000000;">Personal Guarantee  if applicable</span></p>
+<p><span style="color: #000000;">By signing below, signer(s) unconditionally guarantee(s) to the Processor and its successors and assigns the full and prompt payment when due</span> <span style="color: #000000;">of all its obligations of every kind and nature of Merchant arising directly or indirectly out of the Agreement and/or the TeleCheck/</span><span style="color: #000000;">TRS Services</span> <span style="color: #000000;">Agreement or any document or agreement exe cuted and delivered by Merchant in accordance with the terms of the Agreement. The undersigned</span> <span style="color: #000000;">further agrees to pay to the Processor all expenses including attorney fees and court costs) paid or incurred by the Processor in collecting such</span> <span style="color: #000000;">obligations and in enforcing this Guaranty.</span></p>
+                            <div class="form-group">
+                                <label  >Personal Guarantee Signature*:</label><br/>
+                                <div class='personal_guarantee_signature'></div>
+                                <button id="personal_guarantee_signature_clear"  >Clear</button>
+                            </div>
+                            <div class="form-group">
+                                <label for="guarantee_date">Personal Guarantee Sign Date*:</label>
+                                <input type="date" class="form-control" name="personal_guarantee_sign_date" id="personal_guarantee_sign_date" required="true" t-att-value="new_merchant_from['personal_guarantee_sign_date'] if new_merchant_from and new_merchant_from['personal_guarantee_sign_date'] else None"/>
+                            </div>
+                            <div class="form-group">
+                                <label  >Client Initials*:</label><br/>
+                                <div class='client_initials_signature'></div>
+                                <button id="client_initials_signature_clear"  >Clear</button>
+                            </div>
+                            <p style="text-align: center;"><strong><span style="font-size: 14pt;">COMFIRMATION PAGE</span></strong></p>
+                            <p><strong>PROCESSOR INFORMATION:</strong></p>
+                            <p><strong>NAME</strong>: CardConnect, LLC</p>
+                            <p><strong>Address</strong>: 1000 Continental Drive, Suite 300, King on Prussia, PA 19046</p>
+                            <p><strong>URL</strong>: <a href="http://www.cardconnect.com" target="_blank" rel="nofollow noopener noreferrer">www.cardconnect.com</a></p>
+                            <p><strong>Customer Service #:</strong> 1-877-828-0720</p>
+                            <p><span style="font-weight: bold; color: #000000;">Please read the Program Guide in its entirety. It describes the terms under which we will provide merchant processing Services to you. </span> <span style="font-weight: bold; color: #000000;">From time to time you may have questions regarding the contents of your Agreement with Bank and/or Processor or the contents of your</span> <span style="font-weight: bold; color: #000000;">Agreement with TeleCheck. The following information summarizes portions of your Agreement in order to assist you in answering some of</span> <span style="font-weight: bold; color: #000000;">the questions we are most commonly asked. </span></p>
+                            <p style="text-align: center;"><strong><span style="font-size: 14pt;">COMFIRMATION PAGE</span></strong></p>
+                            <p><strong>PROCESSOR INFORMATION:</strong></p>
+                            <p><strong>NAME</strong>: CardConnect, LLC</p>
+                            <p><strong>Address</strong>: 1000 Continental Drive, Suite 300, King on Prussia, PA 19046</p>
+                            <p><strong>URL</strong>: <a href="http://www.cardconnect.com" target="_blank" rel="nofollow noopener noreferrer">www.cardconnect.com</a></p>
+                            <p><strong>Customer Service #:</strong> 1-877-828-0720</p>
+                            <div class="form-group">
+                                <label class="col-form-label" for="print_name">Print Client's Business Legal Name:</label>
+                                <input type="text" name="print_client_business_legal_name" id="print_client_business_legal_name" required="required" class="form-control" t-att-value="new_merchant_from['print_client_business_legal_name'] if new_merchant_from and new_merchant_from['print_client_business_legal_name'] else None"/>
+                            </div>
+                            <p style="text-align: center;"><strong><span style="font-size: 14pt;">COMFIRMATION PAGE</span></strong></p>
+                            <p><strong>PROCESSOR INFORMATION:</strong></p>
+                            <p><strong>NAME</strong>: CardConnect, LLC</p>
+                            <p><strong>Address</strong>: 1000 Continental Drive, Suite 300, King on Prussia, PA 19046</p>
+                            <p><strong>URL</strong>: <a href="http://www.cardconnect.com" target="_blank" rel="nofollow noopener noreferrer">www.cardconnect.com</a></p>
+                            <p><strong>Customer Service #:</strong> 1-877-828-0720</p>
+                            <div class="form-group">
+                                <label  >Client's Business Principal Signature:</label><br/>
+                                <div class='client_business_principle_signature'></div>
+                                <button id="client_business_principle_signature_clear"  >Clear</button>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-form-label" for="print_name_signer">Print Name of Signer:</label>
+                                <input type="text" class="form-control" name="print_name_signer" id="print_name_signer" required="required" t-att-value="new_merchant_from['print_name_signer'] if new_merchant_from and new_merchant_from['print_name_signer'] else None"/>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-form-label" for="business_principle_title">Client's Business Principle Title:</label>
+                                <input type="text" class="form-control" id="business_principle_title" name="business_principle_title" required="required" t-att-value="new_merchant_from['business_principle_title'] if new_merchant_from and new_merchant_from['business_principle_title'] else None"/>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-form-label" for="business_principle_sign_date">Client's Business Principle Sign Date:</label>
+                                <input type="date" class="form-control" name="business_principle_sign_date" id="business_principle_sign_date" required="required" t-att-value="new_merchant_from['business_principle_sign_date'] if new_merchant_from and new_merchant_from['business_principle_sign_date'] else None" />
+                            </div>
+                            <input id="hidden_canvas" name="hidden_canvas" type="hidden"   />
+                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+                            <input type="hidden" name="submitted" value="1" />
+                            <input type="hidden" name="partner_id" t-att-value="partner_id or '0'" />
+
+                            <button class="btn btn-primary" id="sumit_merchant_application">Submit</button>
+                            <t t-if="not new_merchant_from or not new_merchant_from['if_shared_form']">
+                                <button class="btn btn-primary" id="sumit_merchant_application_share_link">Get the sharing link</button>
+                            </t>
+
+                        </form>
+
+                    </div>
+                </div>
+              </div>
+          </t>
+    </template>
+
+
+</odoo>

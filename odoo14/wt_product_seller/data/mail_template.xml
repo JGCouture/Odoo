@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="mail_template_share_cart" model="mail.template">
+            <field name="name">Share cart email template</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="subject">${object.company_id.name} : Here is your shopping</field>
+            <field name="email_from">${(object.x_studio_many2one_field_8mpil.work_email or user.email_formatted) | safe}</field>
+            <field name="email_to">${object.partner_id.email}</field>
+            <field name="body_html" type="html">
+<div style="margin: 0px; padding: 0px;">
+    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+        Hello ${object.partner_id.name},
+        <br/><br/>
+        % set access_url=ctx.get('share_url')
+        <p>Please click <a  href="${access_url}">Here</a> to complete the payment and confirm the order.</p>
+        <br/>
+        <br/>
+        Do not hesitate to contact us if you have any questions.
+        <br/>
+    </p>
+</div>
+            </field>
+            <field name="lang">${object.partner_id.lang}</field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+
+    </data>
+</odoo>

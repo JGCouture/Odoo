@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_online_order,access_online_order,model_online_order,base.group_user,1,1,1,1
+access_online_order_public,access_online_order_public,model_online_order,base.group_public,1,1,1,0
+access_online_order_portal,access_online_order_portal,model_online_order,base.group_portal,1,1,1,0
+access_product_hyper_link,access_product_hyper_link,model_product_hyper_link,base.group_user,1,1,1,1
+access_pos_term_template,access_pos_term_template,model_pos_term_template,base.group_user,1,1,1,1

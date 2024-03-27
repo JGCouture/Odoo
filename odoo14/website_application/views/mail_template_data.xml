@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data noupdate="1">
+    <record id="email_sign_payment_contract" model="mail.template">
+        <field name="name">Notification:your client signed 3rd payment contract </field>
+        <field name="model_id" ref="base.model_res_users"/>
+        <field name="subject">Notification: your client have signed  payment contract </field>
+        <field name="email_from">${ctx.get('email_from')}</field>
+        <field name="email_to">${ctx.get('email_to')}</field>
+        <field name="body_html" type="html">
+        <div style="margin: 0px; padding: 0px;">
+            <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                Hello ,${ctx.get('agent_name')}
+                <br/><br/>
+                your client  ${ctx.get('owner_name')} signed 3rd payment contract!
+                <br/><br/>
+                here are his information:                <br/><br/>
+                Store Name: ${ctx.get('store_name')}<br/><br/>
+                Store Phone: ${ctx.get('store_phone')}<br/><br/>
+                Store Address: ${ctx.get('store_address')}<br/><br/>
+                Store City: ${ctx.get('store_city')}<br/><br/>
+                Store Zip: ${ctx.get('store_zip')}<br/><br/>
+                Store Country: ${ctx.get('store_country')}<br/><br/>
+                Store State: ${ctx.get('store_state')}<br/><br/>
+                Owner Name: ${ctx.get('owner_name')}<br/><br/>
+                Owner Phone: ${ctx.get('owner_phone')}<br/><br/>
+                Owner Email: ${ctx.get('owner_email')}<br/><br/>
+                Doordash Username: ${ctx.get('doordash_username')}<br/><br/>
+                Doordash Password: ${ctx.get('doordash_password')}<br/><br/>
+                Ubereats Username: ${ctx.get('ubereats_username')}<br/><br/>
+                Ubereats Password: ${ctx.get('ubereats_password')}<br/><br/>
+                Ubereats Pin: ${ctx.get('ubereats_pin')}<br/><br/>
+                Ubereats Tablet Username: ${ctx.get('ubereatstablet_username')}<br/><br/>
+                Ubereats Tablet Password: ${ctx.get('ubereatstablet_password')}<br/><br/>
+                Grubhub Username: ${ctx.get('grubhub_username')}<br/><br/>
+                Grubhub Password: ${ctx.get('grubhub_password')}<br/><br/>
+                Bank Name: ${ctx.get('bank_name')}<br/><br/>
+                Routing: ${ctx.get('routing')}<br/><br/>
+                Account: ${ctx.get('account')}<br/><br/>
+
+                <br/>
+                <br/>
+                Do not hesitate to contact us if you have any questions.
+                <br/>
+            </p>
+        </div>
+            </field>
+        <field name="auto_delete" eval="False"/>
+    </record>
+
+    <record id="application_rma_warranty" model="mail.template">
+        <field name="name">Notification:your client signed a RMA form </field>
+        <field name="model_id" ref="base.model_res_users"/>
+        <field name="subject">Notification: your client signed a RMA form </field>
+        <field name="email_from">${ctx.get('email_from')}</field>
+        <field name="email_to">${ctx.get('email_to')}</field>
+        <field name="body_html" type="html">
+        <div style="margin: 0px; padding: 0px;">
+            <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                Hello ,${ctx.get('agent_name')}
+                <br/><br/>
+                your client  ${ctx.get('owner_name')} signed a RMA form!
+                <br/><br/>
+                here are his information:                <br/><br/>
+                service_type: ${ctx.get('service_type')}<br/><br/>
+                dba: ${ctx.get('dba')}<br/><br/>
+                lead id: ${ctx.get('lead_id')}<br/><br/>
+                contact name: ${ctx.get('contact_name')}<br/><br/>
+                contact phone: ${ctx.get('contact_phone')}<br/><br/>
+                restaurant address: ${ctx.get('restaurant_address')}<br/><br/>
+                restaurant city: ${ctx.get('restaurant_city')}<br/><br/>
+                restaurant country: ${ctx.get('restaurant_country')}<br/><br/>
+                restaurant state: ${ctx.get('state')}<br/><br/>
+                restaurant zipcode: ${ctx.get('restaurant_zipcode')}<br/><br/>
+                model number: ${ctx.get('model_number')}<br/><br/>
+                serial number: ${ctx.get('serial_number')}<br/><br/>
+                date of purchase: ${ctx.get('date_of_purchase')}<br/><br/>
+                detailed fault description: ${ctx.get('detailed_fault_description')}<br/><br/>
+                picture of faulty device: ${ctx.get('picture_of_faulty_device')}<br/><br/>
+
+                <br/>
+                <br/>
+                Do not hesitate to contact us if you have any questions.
+                <br/>
+            </p>
+        </div>
+            </field>
+        <field name="auto_delete" eval="False"/>
+    </record>
+</data>
+
+
+</odoo>
