@@ -4,12 +4,6 @@ Business Management Software Tool
 
 # Setup
 
-1.
-
-![web](/images/confg.png)
-
-2. 
-
 http://localhost:10101/web/database/selector
 
 # Screenshots
