@@ -1,9 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_rebate_bank,access_rebate_bank,model_rebate_bank,base.group_user,1,1,1,1
-access_ach_form,access_ach_form,model_ach_form,base.group_user,1,1,1,1
-access_rma_form,access_rma_form,model_rma_form,base.group_user,1,1,1,1
-access_online_order_form_manager,access_online_order_form_manager,model_online_order_form,website_application.website_application_form_manager_group,1,1,1,1
-access_merchant_form_manager,access_merchant_form_manager,model_merchant_form,website_application.website_application_form_manager_group,1,1,1,1
-access_online_order_form_user,access_online_order_form_user,model_online_order_form,website_application.website_application_form_user_group,1,0,0,0
-access_merchant_form_user,access_merchant_form_user,model_merchant_form,website_application.website_application_form_user_group,1,0,0,0
-

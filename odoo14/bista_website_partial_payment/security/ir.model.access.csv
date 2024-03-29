@@ -1,2 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_bista_website_partial_payment_bista_website_partial_payment,bista_website_partial_payment.bista_website_partial_payment,model_bista_website_partial_payment_bista_website_partial_payment,base.group_user,1,1,1,1
