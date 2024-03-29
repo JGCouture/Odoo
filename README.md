@@ -18,6 +18,3 @@ http://localhost:10101/web/database/selector
 
 ![web](/images/d2.png)
 
-![web](/images/d3.png)
-
-![web](/images/d4.png)
